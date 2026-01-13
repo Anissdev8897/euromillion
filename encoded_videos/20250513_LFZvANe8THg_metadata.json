@@ -1,0 +1,12 @@
+{
+  "video_name": "20250513_LFZvANe8THg",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.55641746520996,
+    "max_norm": 80.8844985961914,
+    "std_norm": 17.63911247253418
+  },
+  "timestamp": "2025-11-19T20:35:22.767549"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20251105_SEMw0munov0",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.52902603149414,
+    "max_norm": 77.12018585205078,
+    "std_norm": 16.25320816040039
+  },
+  "timestamp": "2025-11-19T21:46:01.229333"
+}

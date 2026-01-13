@@ -1,0 +1,12 @@
+{
+  "video_name": "20250808_csg24gVdeNs",
+  "num_frames": 149,
+  "num_features": 149,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.993459701538086,
+    "max_norm": 81.89501190185547,
+    "std_norm": 17.88353157043457
+  },
+  "timestamp": "2025-11-19T21:15:43.289435"
+}

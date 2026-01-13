@@ -1,0 +1,12 @@
+{
+  "video_name": "20241221_doc56epmeLM",
+  "num_frames": 148,
+  "num_features": 148,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.909212112426758,
+    "max_norm": 79.01724243164062,
+    "std_norm": 16.81197738647461
+  },
+  "timestamp": "2025-11-19T20:02:37.179885"
+}

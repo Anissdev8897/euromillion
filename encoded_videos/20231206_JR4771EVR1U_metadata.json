@@ -1,0 +1,12 @@
+{
+  "video_name": "20231206_JR4771EVR1U",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.37990951538086,
+    "max_norm": 81.0468521118164,
+    "std_norm": 17.594398498535156
+  },
+  "timestamp": "2025-11-19T18:17:40.615389"
+}

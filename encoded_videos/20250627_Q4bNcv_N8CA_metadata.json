@@ -1,0 +1,12 @@
+{
+  "video_name": "20250627_Q4bNcv_N8CA",
+  "num_frames": 148,
+  "num_features": 148,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 23.91448402404785,
+    "max_norm": 76.93429565429688,
+    "std_norm": 16.987571716308594
+  },
+  "timestamp": "2025-11-19T20:56:02.164051"
+}

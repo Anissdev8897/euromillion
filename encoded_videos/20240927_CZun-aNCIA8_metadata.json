@@ -1,0 +1,12 @@
+{
+  "video_name": "20240927_CZun-aNCIA8",
+  "num_frames": 149,
+  "num_features": 149,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.86164665222168,
+    "max_norm": 78.45716094970703,
+    "std_norm": 16.78780174255371
+  },
+  "timestamp": "2025-11-19T19:40:13.065431"
+}

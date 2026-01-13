@@ -1,0 +1,12 @@
+{
+  "video_name": "20241025_6W-S6-7zdH4",
+  "num_frames": 154,
+  "num_features": 154,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.627748489379883,
+    "max_norm": 82.58070373535156,
+    "std_norm": 17.864185333251953
+  },
+  "timestamp": "2025-11-19T19:44:52.501335"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20250528_GNgFmev_NeE",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.82266616821289,
+    "max_norm": 81.03803253173828,
+    "std_norm": 17.347341537475586
+  },
+  "timestamp": "2025-11-19T20:41:14.182916"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20231230__TqmtQcou-o",
+  "num_frames": 153,
+  "num_features": 153,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.26047134399414,
+    "max_norm": 79.4472427368164,
+    "std_norm": 16.50994300842285
+  },
+  "timestamp": "2025-11-19T18:26:27.107107"
+}

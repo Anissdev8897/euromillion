@@ -1,0 +1,12 @@
+{
+  "video_name": "20250315_L-lWqurfwEM",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.240556716918945,
+    "max_norm": 79.04153442382812,
+    "std_norm": 16.75665855407715
+  },
+  "timestamp": "2025-11-19T20:20:18.288752"
+}

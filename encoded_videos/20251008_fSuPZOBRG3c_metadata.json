@@ -1,0 +1,12 @@
+{
+  "video_name": "20251008_fSuPZOBRG3c",
+  "num_frames": 153,
+  "num_features": 153,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.83054542541504,
+    "max_norm": 78.36837005615234,
+    "std_norm": 16.633527755737305
+  },
+  "timestamp": "2025-11-19T21:40:20.596169"
+}

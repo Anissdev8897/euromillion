@@ -1,0 +1,12 @@
+{
+  "video_name": "20250722_14cvPexifvE",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 26.126358032226562,
+    "max_norm": 82.0541763305664,
+    "std_norm": 17.428653717041016
+  },
+  "timestamp": "2025-11-19T21:08:28.092484"
+}

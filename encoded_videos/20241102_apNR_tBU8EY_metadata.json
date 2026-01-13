@@ -1,0 +1,12 @@
+{
+  "video_name": "20241102_apNR_tBU8EY",
+  "num_frames": 150,
+  "num_features": 150,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.046232223510742,
+    "max_norm": 80.06725311279297,
+    "std_norm": 16.970123291015625
+  },
+  "timestamp": "2025-11-19T19:45:56.191003"
+}

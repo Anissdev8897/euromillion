@@ -1,0 +1,12 @@
+{
+  "video_name": "20250319_KFLmxmil3Ys",
+  "num_frames": 149,
+  "num_features": 149,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.729381561279297,
+    "max_norm": 77.7667007446289,
+    "std_norm": 16.664987564086914
+  },
+  "timestamp": "2025-11-19T20:20:46.618064"
+}

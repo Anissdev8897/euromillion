@@ -1,0 +1,12 @@
+{
+  "video_name": "20240612_k-BuD3dvPh8",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.10960578918457,
+    "max_norm": 80.4410400390625,
+    "std_norm": 16.86560821533203
+  },
+  "timestamp": "2025-11-19T19:24:20.028964"
+}

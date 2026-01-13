@@ -1,0 +1,12 @@
+{
+  "video_name": "20240426_lcV273Xkz6U",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.580965042114258,
+    "max_norm": 80.14192199707031,
+    "std_norm": 17.03302574157715
+  },
+  "timestamp": "2025-11-19T19:11:39.478900"
+}

@@ -1,0 +1,43 @@
+Prédictions Euromillions basées sur la série de Fibonacci inversée
+============================================================
+
+Combinaison 1:
+  Numéros: 21, 23, 29, 42, 44
+  Étoiles: 3, 8
+
+Combinaison 2:
+  Numéros: 19, 21, 23, 42, 44
+  Étoiles: 2, 6
+
+Combinaison 3:
+  Numéros: 19, 21, 23, 42, 44
+  Étoiles: 2, 3
+
+Combinaison 4:
+  Numéros: 19, 23, 42, 44, 50
+  Étoiles: 2, 3
+
+Combinaison 5:
+  Numéros: 10, 15, 21, 42, 44
+  Étoiles: 3, 5
+
+Combinaison 6:
+  Numéros: 19, 21, 23, 42, 44
+  Étoiles: 2, 3
+
+Combinaison 7:
+  Numéros: 19, 21, 23, 42, 44
+  Étoiles: 2, 8
+
+Combinaison 8:
+  Numéros: 19, 23, 29, 37, 44
+  Étoiles: 1, 9
+
+Combinaison 9:
+  Numéros: 10, 21, 23, 29, 44
+  Étoiles: 3, 9
+
+Combinaison 10:
+  Numéros: 21, 23, 42, 44, 50
+  Étoiles: 3, 6
+

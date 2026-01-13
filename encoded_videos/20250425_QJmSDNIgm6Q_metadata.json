@@ -1,0 +1,12 @@
+{
+  "video_name": "20250425_QJmSDNIgm6Q",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 23.91411590576172,
+    "max_norm": 78.46826171875,
+    "std_norm": 17.13983154296875
+  },
+  "timestamp": "2025-11-19T20:28:38.792849"
+}

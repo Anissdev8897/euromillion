@@ -1,0 +1,12 @@
+{
+  "video_name": "20240706_Zy53z3BOcdI",
+  "num_frames": 144,
+  "num_features": 144,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.514598846435547,
+    "max_norm": 78.7759780883789,
+    "std_norm": 17.09544563293457
+  },
+  "timestamp": "2025-11-19T19:27:42.954369"
+}

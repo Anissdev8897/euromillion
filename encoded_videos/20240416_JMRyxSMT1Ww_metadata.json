@@ -1,0 +1,12 @@
+{
+  "video_name": "20240416_JMRyxSMT1Ww",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 26.23171615600586,
+    "max_norm": 80.8896484375,
+    "std_norm": 16.952503204345703
+  },
+  "timestamp": "2025-11-19T19:06:23.542915"
+}

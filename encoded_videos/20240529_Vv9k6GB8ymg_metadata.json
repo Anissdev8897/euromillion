@@ -1,0 +1,12 @@
+{
+  "video_name": "20240529_Vv9k6GB8ymg",
+  "num_frames": 143,
+  "num_features": 143,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.80958366394043,
+    "max_norm": 82.40288543701172,
+    "std_norm": 17.520540237426758
+  },
+  "timestamp": "2025-11-19T19:19:36.994424"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20240802_GIGZyVHrvEE",
+  "num_frames": 144,
+  "num_features": 144,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.786983489990234,
+    "max_norm": 80.53953552246094,
+    "std_norm": 17.266586303710938
+  },
+  "timestamp": "2025-11-19T19:31:46.062689"
+}

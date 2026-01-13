@@ -1,0 +1,12 @@
+{
+  "video_name": "20240330_MuNmbiKr1Pc",
+  "num_frames": 139,
+  "num_features": 139,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 26.044212341308594,
+    "max_norm": 79.47471618652344,
+    "std_norm": 17.01961898803711
+  },
+  "timestamp": "2025-11-19T19:01:06.985315"
+}

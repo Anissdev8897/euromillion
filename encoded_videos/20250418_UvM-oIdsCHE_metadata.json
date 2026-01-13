@@ -1,0 +1,12 @@
+{
+  "video_name": "20250418_UvM-oIdsCHE",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 23.84031105041504,
+    "max_norm": 80.64266967773438,
+    "std_norm": 17.431398391723633
+  },
+  "timestamp": "2025-11-19T20:26:37.382177"
+}

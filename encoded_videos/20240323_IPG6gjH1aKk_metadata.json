@@ -1,0 +1,12 @@
+{
+  "video_name": "20240323_IPG6gjH1aKk",
+  "num_frames": 149,
+  "num_features": 149,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.381383895874023,
+    "max_norm": 77.66275024414062,
+    "std_norm": 16.645488739013672
+  },
+  "timestamp": "2025-11-19T18:58:29.173943"
+}

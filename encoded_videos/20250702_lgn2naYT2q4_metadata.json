@@ -1,0 +1,12 @@
+{
+  "video_name": "20250702_lgn2naYT2q4",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.33523941040039,
+    "max_norm": 78.99795532226562,
+    "std_norm": 16.781532287597656
+  },
+  "timestamp": "2025-11-19T20:58:01.500628"
+}

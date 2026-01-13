@@ -1,0 +1,12 @@
+{
+  "video_name": "20240207_QdqmvJw6Y-s",
+  "num_frames": 148,
+  "num_features": 148,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.630292892456055,
+    "max_norm": 79.46499633789062,
+    "std_norm": 17.31247901916504
+  },
+  "timestamp": "2025-11-19T18:42:22.948945"
+}

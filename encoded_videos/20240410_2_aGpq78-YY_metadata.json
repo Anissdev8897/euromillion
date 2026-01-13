@@ -1,0 +1,12 @@
+{
+  "video_name": "20240410_2_aGpq78-YY",
+  "num_frames": 141,
+  "num_features": 141,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.186931610107422,
+    "max_norm": 77.74917602539062,
+    "std_norm": 16.938716888427734
+  },
+  "timestamp": "2025-11-19T19:02:37.375236"
+}

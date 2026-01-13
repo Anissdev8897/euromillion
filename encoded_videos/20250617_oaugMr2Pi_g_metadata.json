@@ -1,0 +1,12 @@
+{
+  "video_name": "20250617_oaugMr2Pi_g",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.490299224853516,
+    "max_norm": 79.41203308105469,
+    "std_norm": 16.954973220825195
+  },
+  "timestamp": "2025-11-19T20:50:40.014006"
+}

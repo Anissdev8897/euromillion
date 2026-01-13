@@ -1,0 +1,12 @@
+{
+  "video_name": "20240224_0TascNhp9KM",
+  "num_frames": 143,
+  "num_features": 143,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.40157127380371,
+    "max_norm": 78.38333129882812,
+    "std_norm": 16.70330810546875
+  },
+  "timestamp": "2025-11-19T18:47:02.583858"
+}

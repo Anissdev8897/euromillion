@@ -1,0 +1,12 @@
+{
+  "video_name": "20250212_7eCnv-ySPyQ",
+  "num_frames": 146,
+  "num_features": 146,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.110145568847656,
+    "max_norm": 79.50666809082031,
+    "std_norm": 16.923526763916016
+  },
+  "timestamp": "2025-11-19T20:16:13.787039"
+}

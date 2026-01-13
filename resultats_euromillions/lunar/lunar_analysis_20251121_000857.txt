@@ -1,0 +1,357 @@
+================================================================================
+ANALYSE DE L'INFLUENCE DU CYCLE LUNAIRE SUR LES TIRAGES EUROMILLIONS
+================================================================================
+
+Date de l'analyse: 2025-11-21 00:08:57
+
+Note: Les tirages sont analysés depuis le premier tirage EuroMillions (13 février 2004)
+      jusqu'au tirage le plus récent, avec les plus récents en haut du fichier.
+
+--------------------------------------------------------------------------------
+DISTRIBUTION DES PHASES LUNAIRES
+--------------------------------------------------------------------------------
+Nouvelle Lune: 239 tirages
+Premier Croissant: 238 tirages
+Premier Quartier: 235 tirages
+Gibbeuse Croissante: 233 tirages
+Pleine Lune: 239 tirages
+Gibbeuse Décroissante: 234 tirages
+Dernier Quartier: 239 tirages
+Dernier Croissant: 238 tirages
+
+--------------------------------------------------------------------------------
+STATISTIQUES D'ILLUMINATION LUNAIRE
+--------------------------------------------------------------------------------
+Mean: 0.4996
+Median: 0.4993
+Std: 0.3514
+Min: 0.0000
+Max: 0.9998
+
+--------------------------------------------------------------------------------
+FRÉQUENCE DES NUMÉROS PAR PHASE LUNAIRE
+--------------------------------------------------------------------------------
+Nouvelle Lune:
+  Numéro 21: 38 occurrences
+  Numéro 36: 31 occurrences
+  Numéro 39: 31 occurrences
+  Numéro 50: 30 occurrences
+  Numéro 2: 29 occurrences
+  Numéro 5: 28 occurrences
+  Numéro 13: 28 occurrences
+  Numéro 17: 28 occurrences
+  Numéro 20: 28 occurrences
+  Numéro 40: 28 occurrences
+
+Premier Croissant:
+  Numéro 30: 35 occurrences
+  Numéro 49: 34 occurrences
+  Numéro 26: 32 occurrences
+  Numéro 12: 31 occurrences
+  Numéro 25: 31 occurrences
+  Numéro 27: 30 occurrences
+  Numéro 50: 29 occurrences
+  Numéro 15: 28 occurrences
+  Numéro 17: 28 occurrences
+  Numéro 5: 28 occurrences
+
+Premier Quartier:
+  Numéro 48: 38 occurrences
+  Numéro 19: 35 occurrences
+  Numéro 42: 31 occurrences
+  Numéro 45: 30 occurrences
+  Numéro 3: 29 occurrences
+  Numéro 18: 29 occurrences
+  Numéro 49: 29 occurrences
+  Numéro 21: 28 occurrences
+  Numéro 14: 28 occurrences
+  Numéro 24: 28 occurrences
+
+Gibbeuse Croissante:
+  Numéro 50: 34 occurrences
+  Numéro 44: 33 occurrences
+  Numéro 45: 31 occurrences
+  Numéro 35: 29 occurrences
+  Numéro 7: 28 occurrences
+  Numéro 12: 28 occurrences
+  Numéro 15: 28 occurrences
+  Numéro 6: 27 occurrences
+  Numéro 4: 27 occurrences
+  Numéro 19: 27 occurrences
+
+Pleine Lune:
+  Numéro 10: 34 occurrences
+  Numéro 38: 33 occurrences
+  Numéro 44: 33 occurrences
+  Numéro 19: 32 occurrences
+  Numéro 7: 31 occurrences
+  Numéro 11: 30 occurrences
+  Numéro 25: 30 occurrences
+  Numéro 31: 29 occurrences
+  Numéro 4: 28 occurrences
+  Numéro 23: 28 occurrences
+
+Gibbeuse Décroissante:
+  Numéro 7: 34 occurrences
+  Numéro 43: 34 occurrences
+  Numéro 29: 32 occurrences
+  Numéro 42: 31 occurrences
+  Numéro 45: 31 occurrences
+  Numéro 35: 30 occurrences
+  Numéro 9: 29 occurrences
+  Numéro 23: 29 occurrences
+  Numéro 37: 29 occurrences
+  Numéro 12: 28 occurrences
+
+Dernier Quartier:
+  Numéro 42: 34 occurrences
+  Numéro 16: 32 occurrences
+  Numéro 26: 31 occurrences
+  Numéro 11: 30 occurrences
+  Numéro 28: 30 occurrences
+  Numéro 48: 30 occurrences
+  Numéro 13: 28 occurrences
+  Numéro 21: 28 occurrences
+  Numéro 38: 28 occurrences
+  Numéro 24: 27 occurrences
+
+Dernier Croissant:
+  Numéro 23: 38 occurrences
+  Numéro 13: 34 occurrences
+  Numéro 35: 34 occurrences
+  Numéro 38: 34 occurrences
+  Numéro 29: 33 occurrences
+  Numéro 37: 33 occurrences
+  Numéro 4: 29 occurrences
+  Numéro 5: 29 occurrences
+  Numéro 21: 29 occurrences
+  Numéro 31: 29 occurrences
+
+--------------------------------------------------------------------------------
+FRÉQUENCE DES ÉTOILES PAR PHASE LUNAIRE
+--------------------------------------------------------------------------------
+Nouvelle Lune:
+  Étoile 3: 51 occurrences
+  Étoile 6: 51 occurrences
+  Étoile 9: 48 occurrences
+  Étoile 2: 47 occurrences
+  Étoile 7: 47 occurrences
+  Étoile 8: 46 occurrences
+  Étoile 5: 40 occurrences
+  Étoile 1: 34 occurrences
+  Étoile 10: 34 occurrences
+  Étoile 4: 32 occurrences
+  Étoile 11: 28 occurrences
+  Étoile 12: 20 occurrences
+
+Premier Croissant:
+  Étoile 2: 56 occurrences
+  Étoile 8: 50 occurrences
+  Étoile 3: 46 occurrences
+  Étoile 6: 44 occurrences
+  Étoile 7: 44 occurrences
+  Étoile 9: 42 occurrences
+  Étoile 1: 40 occurrences
+  Étoile 5: 40 occurrences
+  Étoile 4: 40 occurrences
+  Étoile 11: 30 occurrences
+  Étoile 10: 24 occurrences
+  Étoile 12: 20 occurrences
+
+Premier Quartier:
+  Étoile 5: 52 occurrences
+  Étoile 7: 49 occurrences
+  Étoile 3: 48 occurrences
+  Étoile 1: 46 occurrences
+  Étoile 9: 46 occurrences
+  Étoile 2: 43 occurrences
+  Étoile 8: 39 occurrences
+  Étoile 10: 37 occurrences
+  Étoile 11: 32 occurrences
+  Étoile 4: 31 occurrences
+  Étoile 6: 30 occurrences
+  Étoile 12: 17 occurrences
+
+Gibbeuse Croissante:
+  Étoile 10: 51 occurrences
+  Étoile 7: 47 occurrences
+  Étoile 1: 45 occurrences
+  Étoile 6: 45 occurrences
+  Étoile 2: 42 occurrences
+  Étoile 8: 41 occurrences
+  Étoile 5: 39 occurrences
+  Étoile 9: 37 occurrences
+  Étoile 3: 34 occurrences
+  Étoile 4: 31 occurrences
+  Étoile 11: 27 occurrences
+  Étoile 12: 27 occurrences
+
+Pleine Lune:
+  Étoile 3: 55 occurrences
+  Étoile 2: 54 occurrences
+  Étoile 7: 46 occurrences
+  Étoile 1: 43 occurrences
+  Étoile 8: 43 occurrences
+  Étoile 4: 42 occurrences
+  Étoile 6: 42 occurrences
+  Étoile 5: 41 occurrences
+  Étoile 9: 40 occurrences
+  Étoile 11: 33 occurrences
+  Étoile 10: 23 occurrences
+  Étoile 12: 16 occurrences
+
+Gibbeuse Décroissante:
+  Étoile 9: 49 occurrences
+  Étoile 8: 49 occurrences
+  Étoile 3: 48 occurrences
+  Étoile 2: 45 occurrences
+  Étoile 7: 42 occurrences
+  Étoile 5: 40 occurrences
+  Étoile 11: 39 occurrences
+  Étoile 1: 38 occurrences
+  Étoile 10: 35 occurrences
+  Étoile 6: 33 occurrences
+  Étoile 4: 30 occurrences
+  Étoile 12: 20 occurrences
+
+Dernier Quartier:
+  Étoile 8: 49 occurrences
+  Étoile 6: 49 occurrences
+  Étoile 9: 49 occurrences
+  Étoile 4: 47 occurrences
+  Étoile 3: 45 occurrences
+  Étoile 2: 44 occurrences
+  Étoile 1: 40 occurrences
+  Étoile 5: 39 occurrences
+  Étoile 11: 38 occurrences
+  Étoile 7: 30 occurrences
+  Étoile 10: 28 occurrences
+  Étoile 12: 20 occurrences
+
+Dernier Croissant:
+  Étoile 3: 49 occurrences
+  Étoile 4: 47 occurrences
+  Étoile 8: 47 occurrences
+  Étoile 6: 46 occurrences
+  Étoile 2: 45 occurrences
+  Étoile 5: 45 occurrences
+  Étoile 1: 41 occurrences
+  Étoile 9: 37 occurrences
+  Étoile 10: 34 occurrences
+  Étoile 7: 34 occurrences
+  Étoile 11: 27 occurrences
+  Étoile 12: 24 occurrences
+
+--------------------------------------------------------------------------------
+FRÉQUENCE DES NUMÉROS PAR NIVEAU D'ILLUMINATION
+--------------------------------------------------------------------------------
+Quartile 1:
+  Numéro 21: 66 occurrences
+  Numéro 13: 62 occurrences
+  Numéro 5: 58 occurrences
+  Numéro 37: 58 occurrences
+  Numéro 23: 56 occurrences
+  Numéro 29: 56 occurrences
+  Numéro 39: 56 occurrences
+  Numéro 4: 55 occurrences
+  Numéro 20: 55 occurrences
+  Numéro 17: 55 occurrences
+
+Quartile 2:
+  Numéro 30: 63 occurrences
+  Numéro 11: 60 occurrences
+  Numéro 26: 58 occurrences
+  Numéro 19: 57 occurrences
+  Numéro 3: 55 occurrences
+  Numéro 49: 55 occurrences
+  Numéro 8: 54 occurrences
+  Numéro 37: 53 occurrences
+  Numéro 21: 52 occurrences
+  Numéro 23: 52 occurrences
+
+Quartile 3:
+  Numéro 42: 60 occurrences
+  Numéro 12: 57 occurrences
+  Numéro 14: 57 occurrences
+  Numéro 24: 57 occurrences
+  Numéro 44: 57 occurrences
+  Numéro 7: 56 occurrences
+  Numéro 23: 56 occurrences
+  Numéro 32: 56 occurrences
+  Numéro 27: 55 occurrences
+  Numéro 36: 55 occurrences
+
+Quartile 4:
+  Numéro 44: 68 occurrences
+  Numéro 50: 62 occurrences
+  Numéro 19: 61 occurrences
+  Numéro 10: 61 occurrences
+  Numéro 7: 59 occurrences
+  Numéro 38: 59 occurrences
+  Numéro 45: 59 occurrences
+  Numéro 6: 53 occurrences
+  Numéro 25: 53 occurrences
+  Numéro 42: 52 occurrences
+
+--------------------------------------------------------------------------------
+FRÉQUENCE DES ÉTOILES PAR NIVEAU D'ILLUMINATION
+--------------------------------------------------------------------------------
+Quartile 1:
+  Étoile 3: 99 occurrences
+  Étoile 6: 95 occurrences
+  Étoile 8: 95 occurrences
+  Étoile 2: 93 occurrences
+  Étoile 5: 87 occurrences
+  Étoile 9: 85 occurrences
+  Étoile 7: 80 occurrences
+  Étoile 4: 76 occurrences
+  Étoile 1: 74 occurrences
+  Étoile 10: 67 occurrences
+  Étoile 11: 54 occurrences
+  Étoile 12: 43 occurrences
+
+Quartile 2:
+  Étoile 8: 100 occurrences
+  Étoile 2: 96 occurrences
+  Étoile 4: 93 occurrences
+  Étoile 6: 92 occurrences
+  Étoile 9: 91 occurrences
+  Étoile 3: 88 occurrences
+  Étoile 1: 83 occurrences
+  Étoile 5: 77 occurrences
+  Étoile 7: 75 occurrences
+  Étoile 11: 65 occurrences
+  Étoile 10: 52 occurrences
+  Étoile 12: 36 occurrences
+
+Quartile 3:
+  Étoile 9: 95 occurrences
+  Étoile 3: 95 occurrences
+  Étoile 7: 94 occurrences
+  Étoile 2: 91 occurrences
+  Étoile 5: 89 occurrences
+  Étoile 1: 86 occurrences
+  Étoile 8: 83 occurrences
+  Étoile 10: 76 occurrences
+  Étoile 11: 74 occurrences
+  Étoile 6: 69 occurrences
+  Étoile 4: 53 occurrences
+  Étoile 12: 41 occurrences
+
+Quartile 4:
+  Étoile 2: 96 occurrences
+  Étoile 3: 94 occurrences
+  Étoile 7: 90 occurrences
+  Étoile 8: 86 occurrences
+  Étoile 1: 84 occurrences
+  Étoile 6: 84 occurrences
+  Étoile 5: 83 occurrences
+  Étoile 4: 78 occurrences
+  Étoile 9: 77 occurrences
+  Étoile 10: 71 occurrences
+  Étoile 11: 61 occurrences
+  Étoile 12: 44 occurrences
+
+================================================================================
+FIN DE L'ANALYSE
+================================================================================

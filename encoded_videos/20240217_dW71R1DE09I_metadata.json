@@ -1,0 +1,12 @@
+{
+  "video_name": "20240217_dW71R1DE09I",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.46181297302246,
+    "max_norm": 80.0033950805664,
+    "std_norm": 17.153013229370117
+  },
+  "timestamp": "2025-11-19T18:46:00.715518"
+}

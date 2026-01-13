@@ -1,0 +1,12 @@
+{
+  "video_name": "20250423_225CT-8a7a8",
+  "num_frames": 150,
+  "num_features": 150,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.93643569946289,
+    "max_norm": 81.22383880615234,
+    "std_norm": 17.276546478271484
+  },
+  "timestamp": "2025-11-19T20:28:07.043220"
+}

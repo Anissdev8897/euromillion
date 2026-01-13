@@ -1,0 +1,12 @@
+{
+  "video_name": "20240515_kvs1m-ezBFI",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.375776290893555,
+    "max_norm": 77.80795288085938,
+    "std_norm": 16.50604820251465
+  },
+  "timestamp": "2025-11-19T19:14:38.601365"
+}

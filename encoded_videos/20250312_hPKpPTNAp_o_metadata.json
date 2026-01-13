@@ -1,0 +1,12 @@
+{
+  "video_name": "20250312_hPKpPTNAp_o",
+  "num_frames": 149,
+  "num_features": 149,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.37794303894043,
+    "max_norm": 79.23784637451172,
+    "std_norm": 16.72869300842285
+  },
+  "timestamp": "2025-11-19T20:19:49.561154"
+}

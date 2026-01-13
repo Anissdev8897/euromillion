@@ -1,0 +1,12 @@
+{
+  "video_name": "20241023_-Uar9hyJ9Gw",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 23.88543128967285,
+    "max_norm": 79.12310028076172,
+    "std_norm": 16.993803024291992
+  },
+  "timestamp": "2025-11-19T19:43:20.086216"
+}

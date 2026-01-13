@@ -1,0 +1,12 @@
+{
+  "video_name": "20240601_0jnx-DeUJec",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 26.198869705200195,
+    "max_norm": 80.91106414794922,
+    "std_norm": 17.278907775878906
+  },
+  "timestamp": "2025-11-19T19:21:49.265970"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20250115_kBNLmlcxMFI",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.122037887573242,
+    "max_norm": 80.88304138183594,
+    "std_norm": 17.168689727783203
+  },
+  "timestamp": "2025-11-19T20:11:03.191611"
+}

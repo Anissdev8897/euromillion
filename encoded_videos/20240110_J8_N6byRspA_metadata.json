@@ -1,0 +1,12 @@
+{
+  "video_name": "20240110_J8_N6byRspA",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.16023826599121,
+    "max_norm": 78.7759780883789,
+    "std_norm": 16.92682456970215
+  },
+  "timestamp": "2025-11-19T18:31:13.238555"
+}

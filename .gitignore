@@ -15,9 +15,9 @@ env_local/
 # Logs et temporaires
 *.log
 
-# Données lourdes que tu ne veux pas versionner
-models_euromillions/
-resultats_euromillions/
-reflections_euromillions/
-encoded_videos/
-tirage_videos/
+# Données lourdes (incluses à la demande de l'utilisateur)
+# models_euromillions/
+# resultats_euromillions/
+# reflections_euromillions/
+# encoded_videos/
+# tirage_videos/

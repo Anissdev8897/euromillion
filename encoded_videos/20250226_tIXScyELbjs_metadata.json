@@ -1,0 +1,12 @@
+{
+  "video_name": "20250226_tIXScyELbjs",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 23.957534790039062,
+    "max_norm": 79.1906509399414,
+    "std_norm": 16.95641326904297
+  },
+  "timestamp": "2025-11-19T20:18:18.672040"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20250530_WG3hhBzs55Y",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.1840763092041,
+    "max_norm": 81.00405883789062,
+    "std_norm": 17.371538162231445
+  },
+  "timestamp": "2025-11-19T20:42:45.222794"
+}

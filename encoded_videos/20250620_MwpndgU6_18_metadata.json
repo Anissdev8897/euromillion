@@ -1,0 +1,12 @@
+{
+  "video_name": "20250620_MwpndgU6_18",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.519567489624023,
+    "max_norm": 80.22427368164062,
+    "std_norm": 17.38021469116211
+  },
+  "timestamp": "2025-11-19T20:52:41.283848"
+}

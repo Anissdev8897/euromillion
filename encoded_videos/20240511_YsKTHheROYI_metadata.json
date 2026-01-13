@@ -1,0 +1,12 @@
+{
+  "video_name": "20240511_YsKTHheROYI",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.743173599243164,
+    "max_norm": 79.6983642578125,
+    "std_norm": 17.78883934020996
+  },
+  "timestamp": "2025-11-19T19:14:08.281203"
+}

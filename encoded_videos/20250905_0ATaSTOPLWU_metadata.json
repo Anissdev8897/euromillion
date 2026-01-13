@@ -1,0 +1,12 @@
+{
+  "video_name": "20250905_0ATaSTOPLWU",
+  "num_frames": 150,
+  "num_features": 150,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.936214447021484,
+    "max_norm": 80.61371612548828,
+    "std_norm": 17.27756118774414
+  },
+  "timestamp": "2025-11-19T21:28:58.520108"
+}

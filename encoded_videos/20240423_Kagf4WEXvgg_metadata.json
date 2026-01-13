@@ -1,0 +1,12 @@
+{
+  "video_name": "20240423_Kagf4WEXvgg",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.099058151245117,
+    "max_norm": 81.61278533935547,
+    "std_norm": 17.150814056396484
+  },
+  "timestamp": "2025-11-19T19:10:08.248280"
+}

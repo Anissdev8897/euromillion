@@ -1,0 +1,12 @@
+{
+  "video_name": "20231220_NGILi57PrKY",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 24.225934982299805,
+    "max_norm": 79.42579650878906,
+    "std_norm": 17.127588272094727
+  },
+  "timestamp": "2025-11-19T18:22:43.425864"
+}

@@ -1,0 +1,12 @@
+{
+  "video_name": "20250215_Zcdx86Tmgos",
+  "num_frames": 151,
+  "num_features": 151,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.439651489257812,
+    "max_norm": 79.92086029052734,
+    "std_norm": 17.230226516723633
+  },
+  "timestamp": "2025-11-19T20:16:44.565313"
+}

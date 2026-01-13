@@ -1,0 +1,12 @@
+{
+  "video_name": "20240113_OKNNlLa_IQE",
+  "num_frames": 152,
+  "num_features": 152,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.181894302368164,
+    "max_norm": 80.92909240722656,
+    "std_norm": 17.492088317871094
+  },
+  "timestamp": "2025-11-19T18:32:49.091264"
+}

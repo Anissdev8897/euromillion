@@ -1,0 +1,12 @@
+{
+  "video_name": "20250923_nIBcVoiLglI",
+  "num_frames": 153,
+  "num_features": 153,
+  "feature_dim": 2048,
+  "feature_stats": {
+    "mean_norm": 25.055862426757812,
+    "max_norm": 79.78388977050781,
+    "std_norm": 16.845149993896484
+  },
+  "timestamp": "2025-11-19T21:35:18.824109"
+}
