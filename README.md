@@ -1,4 +1,20 @@
-# Rapport de modifications du projet EuroMillions
+# 💶 Système de Prédiction EuroMillions Optimisé v2.0
+ 
+## 📋 Vue d'ensemble
+
+Ce système utilise des algorithmes avancés de Machine Learning, Deep Learning (QLSTM), et même Quantum ML (via PennyLane) pour analyser les tirages EuroMillions et proposer des prédictions optimisées.
+
+### 🛠 Spécifications Techniques
+
+- **Version Python** : 3.13 (recommandé) / 3.9+
+- **Framework Web** : Flask 2.3+
+- **IA & Deep Learning** : PyTorch, Scikit-Learn, XGBoost, LightGBM, CatBoost
+- **Quantum ML** : PennyLane
+- **Séries Temporelles** : Prophet, Statsmodels
+- **Optimisation** : Optuna, Genetic Algorithms (DEAP)
+- **Analyse Vidéo** : OpenCV
+
+---
 
 ## Résumé des modifications
 
