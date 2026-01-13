@@ -2,6 +2,7 @@
 __pycache__/
 *.pyc
 
+
 # Backups / temporaires
 *.backup
 
@@ -10,7 +11,7 @@ __pycache__/
 # Secrets
 .env
 env_local/
-
+ web.config.backup
 # Logs et temporaires
 *.log
 
