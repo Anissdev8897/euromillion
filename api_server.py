@@ -13,6 +13,10 @@ from pathlib import Path
 from datetime import datetime
 from flask import Flask, request, jsonify, Response
 import traceback
+from dotenv import load_dotenv
+
+# Charger les variables d'environnement depuis le fichier .env
+load_dotenv()
 
 # Configuration du logging
 logging.basicConfig(
@@ -57,7 +61,7 @@ GAME_TYPE = os.environ.get("GAME_TYPE", "euromillions").lower()  # Par défaut: 
 CSV_FILE = Path(__file__).parent / f"tirage_{GAME_TYPE}_complet.csv"
 OUTPUT_DIR = Path(__file__).parent / f"resultats_{GAME_TYPE}"
 MODEL_DIR = Path(__file__).parent / f"models_{GAME_TYPE}"
-SERVER_IP = os.environ.get("SERVER_IP", "107.189.17.46")  # IP du serveur (configurable)
+SERVER_IP = os.environ.get("SERVER_IP", os.environ.get("VPS_IP", "107.189.17.46"))
 
 # Configuration de l'entraînement
 # Mettre à False pour désactiver l'entraînement automatique (entraînement sur PC local uniquement)
