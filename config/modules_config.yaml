@@ -1,0 +1,418 @@
+# Configuration des Modules - Système EuroMillions Optimisé
+# Version: 2.0.0
+# Date: 2025-11-18
+
+# ============================================================================
+# MODULES DE BASE (Toujours actifs)
+# ============================================================================
+base_modules:
+  advanced_encoder:
+    enabled: true
+    description: "Encodeur avancé avec features temporelles et numériques"
+  
+  video_deep_analyzer:
+    enabled: true
+    description: "Analyse vidéo avec deep learning (CNN)"
+    video_dir: "tirage_videos"
+    output_dir: "encoded_videos"
+    frame_interval: 30
+    cnn_model: "resnet50"  # resnet50, efficientnet, vgg16
+    use_gpu: true
+  
+  meta_model_fusion:
+    enabled: true
+    description: "Fusion multi-modèles avec méta-apprentissage"
+  
+  auto_performance_evaluator:
+    enabled: true
+    description: "Évaluation et ajustement automatique des performances"
+    auto_retrain_threshold: 0.6
+    disable_threshold: 0.3
+
+# ============================================================================
+# MODULES DE PRÉDICTION (Activation configurable)
+# ============================================================================
+prediction_modules:
+  
+  # ---- Modules ML Classiques ----
+  ml_classic:
+    enabled: true
+    weight: 1.0
+    description: "Machine Learning classique (RF, GB, XGBoost)"
+    models:
+      - random_forest
+      - gradient_boosting
+      - xgboost
+  
+  # ---- Module Quantique ----
+  quantum:
+    enabled: true
+    weight: 0.8
+    description: "Quantum-inspired ML avec PennyLane"
+    require_pennylane: true
+    n_qubits: 4
+    n_layers: 2
+  
+  # ---- Module Deep Learning ----
+  deep_learning:
+    enabled: true
+    weight: 1.2
+    description: "LSTM, Transformers, Autoencoders"
+    models:
+      - lstm_bidirectional
+      - transformer
+      - autoencoder
+    require_pytorch: true
+  
+  # ---- Module Bayésien ----
+  bayesian:
+    enabled: true
+    weight: 0.9
+    description: "Probabilités bayésiennes et réseaux bayésiens"
+    use_markov_chains: true
+  
+  # ---- Module Fibonacci ----
+  fibonacci:
+    enabled: true
+    weight: 0.7
+    description: "Pondération Fibonacci inversée"
+  
+  # ---- Module Cycle Lunaire ----
+  lunar:
+    enabled: false  # Optionnel
+    weight: 0.3
+    description: "Analyse des cycles lunaires"
+    require_ephem: true
+  
+  # ---- Module Gap Analysis ----
+  gap_analyzer:
+    enabled: true
+    weight: 1.0
+    description: "Analyse des écarts entre tirages"
+    min_history: 100
+  
+  # ---- Module Hot/Cold ----
+  hot_cold:
+    enabled: true
+    weight: 0.9
+    description: "Classification Hot/Cold/Warm"
+    recent_window: 20
+    hot_threshold_sigma: 1.0
+    cold_threshold_sigma: 1.0
+  
+  # ---- Module Séries Temporelles ----
+  time_series:
+    enabled: true
+    weight: 1.1
+    description: "ARIMA, SARIMA, Prophet"
+    models:
+      - arima
+      - prophet
+    require_statsmodels: true
+  
+  # ---- Module Clustering ----
+  clustering:
+    enabled: true
+    weight: 0.8
+    description: "DBSCAN, Hierarchical, GMM"
+    algorithms:
+      - kmeans
+      - dbscan
+      - hierarchical
+  
+  # ---- Module Patterns Géométriques ----
+  geometric:
+    enabled: true
+    weight: 0.7
+    description: "Analyse de patterns géométriques sur la grille"
+  
+  # ---- Module Simulation Physique ----
+  physical_sim:
+    enabled: true
+    weight: 0.6
+    description: "Simulation physique des boules (65g, caoutchouc)"
+    ball_weight: 65  # grammes
+    ball_material: "caoutchouc"
+    use_pymunk: false  # Moteur physique optionnel
+  
+  # ---- Module Génétique ----
+  genetic:
+    enabled: true
+    weight: 1.0
+    description: "Algorithme génétique pour optimisation"
+    population_size: 200
+    generations: 100
+    mutation_rate: 0.02
+    crossover_rate: 0.8
+  
+  # ---- Module PSO ----
+  pso:
+    enabled: true
+    weight: 0.9
+    description: "Particle Swarm Optimization"
+    n_particles: 100
+    n_iterations: 50
+  
+  # ---- Module Corrélations ----
+  correlation:
+    enabled: true
+    weight: 0.8
+    description: "Analyse de corrélations avancées"
+    methods:
+      - pearson
+      - spearman
+      - kendall
+  
+  # ---- Module Fréquences ----
+  frequency:
+    enabled: true
+    weight: 0.7
+    description: "Analyse fréquentielle (FFT)"
+    use_fft: true
+  
+  # ---- Module Séquences ----
+  sequence:
+    enabled: true
+    weight: 0.8
+    description: "Patterns séquentiels et règles d'association"
+    use_apriori: true
+  
+  # ---- Module Anomalies ----
+  anomaly:
+    enabled: true
+    weight: 0.5
+    description: "Détection d'anomalies"
+    algorithms:
+      - isolation_forest
+      - one_class_svm
+      - lof
+  
+  # ---- Module Retard ----
+  delay:
+    enabled: true
+    weight: 0.7
+    description: "Analyse des retards d'apparition"
+  
+  # ---- Module Voisinage ----
+  neighborhood:
+    enabled: true
+    weight: 0.6
+    description: "Analyse de voisinage sur la grille"
+
+# ============================================================================
+# OPTIMISEURS COMBINATOIRES
+# ============================================================================
+optimizers:
+  genetic_optimizer:
+    enabled: true
+    priority: 1
+  
+  pso_optimizer:
+    enabled: true
+    priority: 2
+  
+  combination_optimizer:
+    enabled: true
+    priority: 3
+
+# ============================================================================
+# PARAMÈTRES DE FUSION
+# ============================================================================
+fusion:
+  method: "stacking"  # stacking, blending, voting
+  meta_model: "xgboost"  # xgboost, lightgbm, logistic
+  auto_adjust: true
+  adjustment_frequency: 1  # Après chaque tirage
+  
+  # Stratégies de fusion
+  strategies:
+    - name: "weighted_average"
+      enabled: true
+    - name: "stacking"
+      enabled: true
+    - name: "voting"
+      enabled: false
+
+# ============================================================================
+# PARAMÈTRES D'ÉVALUATION
+# ============================================================================
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - roi
+  
+  # Seuils d'action
+  thresholds:
+    excellent: 0.8  # Augmenter le poids
+    good: 0.6       # Maintenir
+    poor: 0.4       # Diminuer le poids
+    critical: 0.3   # Désactiver temporairement
+  
+  # Actions automatiques
+  auto_actions:
+    retrain_on_poor: true
+    disable_on_critical: true
+    increase_weight_on_excellent: true
+  
+  # Historique
+  history_window: 50  # Nombre de tirages à garder
+
+# ============================================================================
+# PARAMÈTRES VIDÉO
+# ============================================================================
+video:
+  directory: "tirage_videos/"
+  auto_process: true
+  extract_frames: true
+  frame_interval: 30
+  use_yolo: false  # Détection de boules (optionnel)
+  use_optical_flow: false  # Analyse de mouvement (optionnel)
+  
+  # Formats supportés
+  formats:
+    - .mp4
+    - .avi
+    - .webm
+    - .mkv
+    - .mov
+
+# ============================================================================
+# PARAMÈTRES EUROMILLIONS
+# ============================================================================
+euromillions:
+  max_number: 50
+  max_star: 12
+  num_numbers: 5
+  num_stars: 2
+  
+  # Caractéristiques physiques des boules
+  ball_characteristics:
+    weight: 65  # grammes
+    material: "caoutchouc synthétique"
+    diameter_tolerance: 0.1  # mm
+    elasticity_coefficient: 0.8
+
+# ============================================================================
+# CHEMINS ET RÉPERTOIRES
+# ============================================================================
+paths:
+  data_dir: "data/"
+  models_dir: "models_euromillions/"
+  results_dir: "resultats_euromillions/"
+  logs_dir: "logs/"
+  reports_dir: "performance_reports/"
+  encoded_videos_dir: "encoded_videos/"
+  
+  # Fichiers
+  csv_file: "tirage_euromillions_complet.csv"
+  config_file: "config/modules_config.yaml"
+
+# ============================================================================
+# PARAMÈTRES SYSTÈME
+# ============================================================================
+system:
+  use_gpu: true
+  n_jobs: -1  # Nombre de CPU (-1 = tous)
+  random_seed: 42
+  verbose: true
+  
+  # Cache
+  use_cache: true
+  cache_dir: ".cache/"
+  
+  # Logs
+  log_level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  log_to_file: true
+  max_log_files: 10
+
+# ============================================================================
+# PARAMÈTRES D'ENTRAÎNEMENT
+# ============================================================================
+training:
+  test_size: 0.2
+  validation_size: 0.1
+  cross_validation_folds: 5
+  
+  # Early stopping
+  early_stopping: true
+  patience: 10
+  
+  # Hyperparamètres par défaut
+  default_hyperparameters:
+    learning_rate: 0.01
+    batch_size: 32
+    epochs: 100
+    dropout: 0.2
+
+# ============================================================================
+# PARAMÈTRES API
+# ============================================================================
+api:
+  host: "0.0.0.0"
+  port: 5000
+  debug: false
+  enable_cors: true
+  
+  # Endpoints
+  endpoints:
+    predict: "/api/predict"
+    status: "/api/status"
+    models: "/api/models"
+    performance: "/api/performance"
+
+# ============================================================================
+# PARAMÈTRES DE MISE À JOUR AUTOMATIQUE
+# ============================================================================
+auto_update:
+  enabled: true
+  schedule:
+    - day: "tuesday"
+      time: "22:00"
+    - day: "friday"
+      time: "22:00"
+  
+  source_url: "https://www.fdj.fr/jeux-de-tirage/euromillions-my-million/resultats"
+  auto_retrain: false  # Entraînement manuel recommandé
+
+# ============================================================================
+# PARAMÈTRES DE BACKTESTING
+# ============================================================================
+backtesting:
+  enabled: true
+  test_draws: 20
+  metrics:
+    - hit_rate
+    - roi
+    - rank_distribution
+  
+  # Simulation de gains
+  simulate_gains: true
+  bet_amount: 2.5  # euros par grille
+
+# ============================================================================
+# NOTIFICATIONS (Optionnel)
+# ============================================================================
+notifications:
+  enabled: false
+  email:
+    enabled: false
+    smtp_server: ""
+    smtp_port: 587
+    sender: ""
+    recipients: []
+  
+  webhook:
+    enabled: false
+    url: ""
+
+# ============================================================================
+# MODE DEBUG
+# ============================================================================
+debug:
+  enabled: false
+  save_intermediate_results: false
+  verbose_predictions: false
+  plot_visualizations: false

@@ -1,0 +1,158 @@
+# Requirements pour Système EuroMillions Optimisé v2.0
+# Installation: pip install -r requirements.txt
+
+# ============================================================================
+# CORE - Bibliothèques de base
+# ============================================================================
+numpy>=1.24.0,<2.0.0
+pandas>=2.0.0
+scipy>=1.11.0
+
+# ============================================================================
+# MACHINE LEARNING - Classique
+# ============================================================================
+scikit-learn>=1.3.0
+xgboost>=2.0.0
+lightgbm>=4.0.0
+catboost>=1.2.0
+
+# ============================================================================
+# DEEP LEARNING
+# ============================================================================
+torch>=2.0.0
+torchvision>=0.15.0
+# tensorflow>=2.13.0  # Optionnel, pour certains modèles
+
+# ============================================================================
+# QUANTUM ML (Optionnel mais recommandé)
+# ============================================================================
+pennylane>=0.32.0
+pennylane-lightning>=0.32.0  # Backend rapide pour PennyLane
+
+# ============================================================================
+# SÉRIES TEMPORELLES
+# ============================================================================
+statsmodels>=0.14.0
+prophet>=1.1.0  # Facebook Prophet
+pmdarima>=2.0.0  # Auto-ARIMA
+
+# ============================================================================
+# OPTIMISATION
+# ============================================================================
+optuna>=3.3.0  # Optimisation bayésienne
+hyperopt>=0.2.7
+pyswarm>=0.6  # Particle Swarm Optimization
+deap>=1.4.0  # Algorithmes génétiques
+
+# ============================================================================
+# TRAITEMENT VIDÉO
+# ============================================================================
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0  # Modules additionnels
+Pillow>=10.0.0
+
+# ============================================================================
+# VISUALISATION
+# ============================================================================
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.16.0
+
+# ============================================================================
+# WEB & API
+# ============================================================================
+Flask>=2.3.0
+flask-cors>=4.0.0
+requests>=2.31.0
+beautifulsoup4>=4.12.0
+lxml>=4.9.0
+
+# ============================================================================
+# UTILITAIRES
+# ============================================================================
+joblib>=1.3.0  # Sauvegarde de modèles
+pyyaml>=6.0.0  # Configuration YAML
+python-dateutil>=2.8.0
+tqdm>=4.66.0  # Barres de progression
+schedule>=1.2.0  # Tâches planifiées
+
+# ============================================================================
+# ANALYSE STATISTIQUE AVANCÉE
+# ============================================================================
+networkx>=3.1  # Graphes et réseaux
+mlxtend>=0.22.0  # Règles d'association, patterns
+umap-learn>=0.5.3  # Réduction de dimensionnalité
+
+# ============================================================================
+# PROBABILITÉS & BAYÉSIEN
+# ============================================================================
+pgmpy>=0.1.23  # Réseaux bayésiens
+# pymc>=5.7.0  # Modélisation bayésienne (optionnel)
+
+# ============================================================================
+# ASTRONOMIE (pour cycle lunaire - optionnel)
+# ============================================================================
+ephem>=4.1.4
+
+# ============================================================================
+# IA & REFLECTION
+# ============================================================================
+openai>=1.0.0  # Pour AI Reflection Encoder
+
+# ============================================================================
+# MOTEUR PHYSIQUE (optionnel)
+# ============================================================================
+# pymunk>=6.5.0  # Simulation physique 2D
+
+# ============================================================================
+# DÉTECTION D'OBJETS (optionnel pour vidéo)
+# ============================================================================
+# ultralytics>=8.0.0  # YOLOv8 pour détection de boules
+
+# ============================================================================
+# ACCÉLÉRATION GPU (optionnel)
+# ============================================================================
+# cupy>=12.0.0  # NumPy-like pour GPU
+# rapids-cuml  # ML sur GPU (nécessite CUDA)
+
+# ============================================================================
+# DÉVELOPPEMENT & TESTS
+# ============================================================================
+pytest>=7.4.0
+pytest-cov>=4.1.0
+black>=23.7.0  # Formatage de code
+flake8>=6.1.0  # Linting
+mypy>=1.5.0  # Type checking
+
+# ============================================================================
+# JUPYTER (pour analyse interactive)
+# ============================================================================
+jupyter>=1.0.0
+ipykernel>=6.25.0
+ipywidgets>=8.1.0
+
+# ============================================================================
+# NOTES D'INSTALLATION
+# ============================================================================
+# 
+# Installation de base (sans optionnels):
+#   pip install numpy pandas scipy scikit-learn xgboost lightgbm
+#   pip install torch torchvision opencv-python matplotlib seaborn
+#   pip install Flask flask-cors requests beautifulsoup4 pyyaml
+#
+# Installation complète:
+#   pip install -r requirements.txt
+#
+# Pour GPU (CUDA):
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+#
+# Pour PennyLane avec GPU:
+#   pip install pennylane pennylane-lightning[gpu]
+#
+# Pour YOLOv8 (détection vidéo):
+#   pip install ultralytics
+#
+# Vérification:
+#   python -c "import torch; print(f'PyTorch: {torch.__version__}')"
+#   python -c "import cv2; print(f'OpenCV: {cv2.__version__}')"
+#   python -c "import sklearn; print(f'scikit-learn: {sklearn.__version__}')"

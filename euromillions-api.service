@@ -1,0 +1,34 @@
+[Unit]
+Description=Serveur API EuroMillions/Loto - Prédictions IA
+After=network.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/path/to/euromillions
+Environment="PATH=/path/to/euromillions/venv/bin"
+Environment="FLASK_APP=api_server.py"
+Environment="FLASK_ENV=production"
+Environment="PORT=5002"
+Environment="HOST=0.0.0.0"
+Environment="GAME_TYPE=euromillions"
+# Variables d'environnement pour l'IA (optionnel)
+# Environment="LLM_API_KEY_GROK=your_key_here"
+# Environment="LLM_API_KEY_OPENROUTER=your_key_here"
+
+ExecStart=/path/to/euromillions/venv/bin/python3 /path/to/euromillions/api_server.py
+Restart=always
+RestartSec=10
+
+# Logs
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=euromillions-api
+
+# Sécurité
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

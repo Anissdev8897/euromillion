@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EuroMillions - Prédictions Super Calculateur Quantique</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #2c3e50;
+        }
+
+        .container {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 800px;
+            width: 100%;
+            padding: 50px;
+            animation: fadeIn 0.8s ease-in;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+
+        .quantum-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .prediction-section {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 5px solid #667eea;
+        }
+
+        .prediction-label {
+            font-size: 1.1em;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .numbers-display {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 25px;
+            justify-content: center;
+        }
+
+        .number-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            animation: popIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .number-badge:nth-child(1) { animation-delay: 0.1s; }
+        .number-badge:nth-child(2) { animation-delay: 0.2s; }
+        .number-badge:nth-child(3) { animation-delay: 0.3s; }
+        .number-badge:nth-child(4) { animation-delay: 0.4s; }
+        .number-badge:nth-child(5) { animation-delay: 0.5s; }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .stars-display {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .star-badge {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.3em;
+            color: white;
+            background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+            animation: popIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .star-badge:nth-child(1) { animation-delay: 0.6s; }
+        .star-badge:nth-child(2) { animation-delay: 0.7s; }
+
+        .loading {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: #7f8c8d;
+            font-size: 1.1em;
+            font-weight: 500;
+        }
+
+        .error-message {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 20px;
+            border-radius: 10px;
+            color: #c62828;
+            text-align: center;
+            font-weight: 500;
+        }
+
+        .refresh-btn {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            color: #495057;
+            font-size: 0.95em;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .number-badge, .star-badge {
+                width: 50px;
+                height: 50px;
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌌 EuroMillions</h1>
+            <p class="subtitle">Prédictions par Super Calculateur Quantique</p>
+            <span class="quantum-badge">⚛️ Intelligence Quantique Activée</span>
+        </div>
+
+        <div id="loadingDiv" class="loading">
+            <div class="spinner"></div>
+            <p class="loading-text">Calcul quantique en cours...</p>
+            <p class="loading-text" style="font-size: 0.9em; margin-top: 10px; color: #95a5a6;">
+                Analyse des probabilités quantiques et optimisation des combinaisons
+            </p>
+        </div>
+
+        <div id="predictionDiv" style="display: none;">
+            <div class="prediction-section">
+                <div class="prediction-label">Numéros Prédits :</div>
+                <div class="numbers-display" id="numbersDisplay"></div>
+                
+                <div class="prediction-label" style="margin-top: 30px;">Étoiles Prédites :</div>
+                <div class="stars-display" id="starsDisplay"></div>
+            </div>
+
+            <div class="refresh-btn">
+                <button class="btn" onclick="loadPredictions()">🔄 Actualiser les Prédictions</button>
+            </div>
+
+            <div class="info-box">
+                <strong>ℹ️ Information :</strong> Ces prédictions sont générées par notre Super Calculateur Quantique utilisant l'Intelligence Artificielle, le Machine Learning Quantique (QNN, QLSTM) et l'Optimisation par Recuit Simulé Quantique. Les résultats sont basés sur l'analyse de l'historique complet des tirages EuroMillions.
+            </div>
+        </div>
+
+        <div id="errorDiv" style="display: none;">
+            <div class="error-message" id="errorMessage"></div>
+            <div class="refresh-btn">
+                <button class="btn" onclick="loadPredictions()">🔄 Réessayer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration API
+        // Solution pour éviter Mixed Content (HTTPS -> HTTP)
+        function getApiUrl() {
+            const hostname = window.location.hostname;
+            const protocol = window.location.protocol; // 'https:' ou 'http:'
+            
+            console.log('🔍 Debug API URL:', { hostname, protocol, origin: window.location.origin });
+            
+            // Si on est sur le domaine kenopredictionia.fr en HTTPS
+            if (hostname.includes('kenopredictionia.fr') && protocol === 'https:') {
+                // Utiliser le même domaine avec un chemin proxy (nécessite configuration IIS/nginx)
+                const apiUrl = window.location.origin;
+                console.log('✅ Utilisation du reverse proxy HTTPS:', apiUrl);
+                return apiUrl;
+            }
+            
+            // Si on est sur le domaine kenopredictionia.fr en HTTP
+            if (hostname.includes('kenopredictionia.fr') || hostname.includes('107.189.17.46')) {
+                const apiUrl = 'http://107.189.17.46:5002';
+                console.log('⚠️ Utilisation HTTP directe:', apiUrl);
+                return apiUrl;
+            }
+            
+            // Sinon utiliser l'origine actuelle avec le port 5002
+            const origin = window.location.origin;
+            let apiUrl;
+            if (origin.includes(':')) {
+                apiUrl = origin.split(':').slice(0, -1).join(':') + ':5002';
+            } else {
+                apiUrl = origin.replace(/:\d+$/, '') + ':5002';
+            }
+            console.log('📍 Utilisation origine avec port:', apiUrl);
+            return apiUrl;
+        }
+
+        function getApiEndpoint(endpoint) {
+            return getApiUrl() + endpoint;
+        }
+
+        // Charger les prédictions
+        async function loadPredictions() {
+            const loadingDiv = document.getElementById('loadingDiv');
+            const predictionDiv = document.getElementById('predictionDiv');
+            const errorDiv = document.getElementById('errorDiv');
+            const errorMessage = document.getElementById('errorMessage');
+            
+            // Afficher le chargement
+            loadingDiv.style.display = 'block';
+            predictionDiv.style.display = 'none';
+            errorDiv.style.display = 'none';
+
+            try {
+                // Essayer d'abord avec l'endpoint simple
+                let response = await fetch(getApiEndpoint('/api/predict/simple'), {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        combinations: 1
+                    })
+                });
+
+                // Si erreur, essayer avec l'endpoint complet
+                if (!response.ok) {
+                    response = await fetch(getApiEndpoint('/api/predict'), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            method: 'all',
+                            combinations: 1
+                        })
+                    });
+                }
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`Erreur HTTP ${response.status}: ${errorText.substring(0, 100)}`);
+                }
+
+                const data = await response.json();
+
+                if (data.status === 'success' && data.combinations && data.combinations.length > 0) {
+                    const combo = data.combinations[0];
+                    displayPrediction(combo.numbers, combo.stars || []);
+                } else {
+                    throw new Error(data.message || 'Aucune prédiction disponible');
+                }
+            } catch (error) {
+                console.error('Erreur lors du chargement des prédictions:', error);
+                errorMessage.textContent = `Erreur: ${error.message}. Vérifiez que le serveur API est démarré.`;
+                loadingDiv.style.display = 'none';
+                errorDiv.style.display = 'block';
+            }
+        }
+
+        // Afficher la prédiction
+        function displayPrediction(numbers, stars) {
+            const numbersDisplay = document.getElementById('numbersDisplay');
+            const starsDisplay = document.getElementById('starsDisplay');
+            const loadingDiv = document.getElementById('loadingDiv');
+            const predictionDiv = document.getElementById('predictionDiv');
+
+            // Afficher les numéros
+            numbersDisplay.innerHTML = '';
+            if (numbers && numbers.length > 0) {
+                numbers.forEach(num => {
+                    const badge = document.createElement('div');
+                    badge.className = 'number-badge';
+                    badge.textContent = num;
+                    numbersDisplay.appendChild(badge);
+                });
+            }
+
+            // Afficher les étoiles
+            starsDisplay.innerHTML = '';
+            if (stars && stars.length > 0) {
+                stars.forEach(star => {
+                    const badge = document.createElement('div');
+                    badge.className = 'star-badge';
+                    badge.textContent = star;
+                    starsDisplay.appendChild(badge);
+                });
+            }
+
+            // Masquer le chargement et afficher la prédiction
+            loadingDiv.style.display = 'none';
+            predictionDiv.style.display = 'block';
+        }
+
+        // Charger les prédictions au chargement de la page
+        window.addEventListener('DOMContentLoaded', () => {
+            loadPredictions();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+
+
+.\env\Scripts\Activate.ps1
+
+
+env\Scripts\activate.bat
+
+entrainement complet 
+uméros [15, 2, 21, 4, 48], étoiles [6, 12]
+2025-11-20 22:33:54,672 - EuromillionsAdvancedAnalyzer - INFO - Calcul des scores finaux...

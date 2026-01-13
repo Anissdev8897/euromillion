@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# Logs & temp
+*.log
+*.tmp
+
+# Data / résultats (NE PAS versionner)
+models_euromillions/
+resultats_euromillions/
+reflections_euromillions/
+encoded_videos/
+tirage_videos/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backups
+*.backup
