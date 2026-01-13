@@ -1,23 +1,13 @@
-# Python
-__pycache__/
-*.pyc
+# Secrets
 .env
-.venv/
+env_local/
 
-# Logs & temp
+# Logs et temporaires
 *.log
-*.tmp
 
-# Data / résultats (NE PAS versionner)
+# Données lourdes que tu ne veux pas versionner
 models_euromillions/
 resultats_euromillions/
 reflections_euromillions/
 encoded_videos/
 tirage_videos/
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Backups
-*.backup
