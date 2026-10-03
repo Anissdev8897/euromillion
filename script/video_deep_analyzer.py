@@ -23,6 +23,10 @@ import json
 import pickle
 import traceback
 from collections import defaultdict
+try:
+    from safe_model_loader import safe_pickle_load, ModelIntegrityError  # type: ignore
+except ImportError:  # pragma: no cover
+    from script.safe_model_loader import safe_pickle_load, ModelIntegrityError  # type: ignore
 
 # Configuration du logging
 logging.basicConfig(
@@ -391,12 +395,15 @@ class VideoDeepAnalyzer:
             return None
         
         try:
-            with open(pkl_path, 'rb') as f:
-                embedding = pickle.load(f)
-            
+            # Chargement vérifié par SHA-256 (anti-RCE), voir safe_model_loader.
+            embedding = safe_pickle_load(pkl_path)
+
             logger.info(f"📂 Embedding chargé: {video_name}")
             return embedding
-        
+
+        except ModelIntegrityError:
+            logger.critical(f"Intégrité refusée pour l'embedding {video_name} (mode strict).")
+            raise
         except Exception as e:
             logger.error(f"Erreur chargement embedding: {e}")
             return None

@@ -26,6 +26,11 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import accuracy_score # Ajout de l'importation pour accuracy_score
 from typing import Tuple, Optional, Any # Ajouter Any pour les modèles sklearn
 
+try:
+    from safe_model_loader import safe_joblib_load, ModelIntegrityError  # type: ignore
+except ImportError:  # pragma: no cover
+    from script.safe_model_loader import safe_joblib_load, ModelIntegrityError  # type: ignore
+
 logger = logging.getLogger("EuromillionsIncrementalLearning")
 
 class EuromillionsIncrementalLearning:
@@ -71,9 +76,11 @@ class EuromillionsIncrementalLearning:
         # Charger le modèle des numéros
         if number_model_path.exists():
             try:
-                self.analyzer.number_model = joblib.load(number_model_path)
+                self.analyzer.number_model = safe_joblib_load(number_model_path)
                 logger.info(f"Modèle de numéros chargé depuis {number_model_path}")
                 self.first_fit_done_numbers = True # Marquer comme déjà fit si chargé
+            except ModelIntegrityError:
+                raise  # ne pas substituer silencieusement un modèle non vérifié
             except Exception as e:
                 logger.warning(f"Impossible de charger le modèle de numéros existant: {e}. Création d'un nouveau modèle.")
                 self.analyzer.number_model = MLPClassifier(hidden_layer_sizes=(100,), activation='relu', solver='adam', 
@@ -90,8 +97,10 @@ class EuromillionsIncrementalLearning:
         # Charger le scaler des numéros (incrémental)
         if scaler_numbers_path.exists():
             try:
-                self.incremental_scaler_numbers = joblib.load(scaler_numbers_path)
+                self.incremental_scaler_numbers = safe_joblib_load(scaler_numbers_path)
                 logger.info(f"Scaler incrémental de numéros chargé depuis {scaler_numbers_path}")
+            except ModelIntegrityError:
+                raise  # ne pas substituer silencieusement un scaler non vérifié
             except Exception as e:
                 logger.warning(f"Impossible de charger le scaler incrémental de numéros existant: {e}. Création d'un nouveau scaler.")
                 self.incremental_scaler_numbers = StandardScaler()
@@ -101,9 +110,11 @@ class EuromillionsIncrementalLearning:
         # Charger le modèle des étoiles
         if star_model_path.exists():
             try:
-                self.analyzer.star_model = joblib.load(star_model_path)
+                self.analyzer.star_model = safe_joblib_load(star_model_path)
                 logger.info(f"Modèle d'étoiles chargé depuis {star_model_path}")
                 self.first_fit_done_stars = True # Marquer comme déjà fit si chargé
+            except ModelIntegrityError:
+                raise  # ne pas substituer silencieusement un modèle non vérifié
             except Exception as e:
                 logger.warning(f"Impossible de charger le modèle d'étoiles existant: {e}. Création d'un nouveau modèle.")
                 self.analyzer.star_model = MLPClassifier(hidden_layer_sizes=(50,), activation='relu', solver='adam', 
@@ -118,8 +129,10 @@ class EuromillionsIncrementalLearning:
         # Charger le scaler des étoiles (incrémental)
         if scaler_stars_path.exists():
             try:
-                self.incremental_scaler_stars = joblib.load(scaler_stars_path)
+                self.incremental_scaler_stars = safe_joblib_load(scaler_stars_path)
                 logger.info(f"Scaler incrémental d'étoiles chargé depuis {scaler_stars_path}")
+            except ModelIntegrityError:
+                raise  # ne pas substituer silencieusement un scaler non vérifié
             except Exception as e:
                 logger.warning(f"Impossible de charger le scaler incrémental d'étoiles existant: {e}. Création d'un nouveau scaler.")
                 self.incremental_scaler_stars = StandardScaler()

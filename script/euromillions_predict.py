@@ -20,6 +20,10 @@ from datetime import datetime
 from typing import Dict, List, Tuple, Optional, Union, Any
 import traceback
 import warnings
+try:
+    from safe_model_loader import ModelIntegrityError  # type: ignore
+except ImportError:  # pragma: no cover
+    from script.safe_model_loader import ModelIntegrityError  # type: ignore
 import json
 
 # Configuration du logging
@@ -211,6 +215,8 @@ class EuromillionsPredictor:
             try:
                 self.predictors["main"] = EuromillionsAnalyzer(self.config)
                 logger.info("Prédicteur principal initialisé.")
+            except ModelIntegrityError:
+                raise  # ne pas masquer un refus d'intégrité des modèles (mode strict)
             except Exception as e:
                 logger.error(f"Erreur lors de l'initialisation du prédicteur principal: {str(e)}")
         
