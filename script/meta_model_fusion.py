@@ -21,6 +21,10 @@ import json
 import pickle
 import traceback
 from collections import defaultdict
+try:
+    from safe_model_loader import safe_pickle_load  # type: ignore
+except ImportError:  # pragma: no cover
+    from script.safe_model_loader import safe_pickle_load  # type: ignore
 
 # Configuration du logging
 logging.basicConfig(
@@ -549,8 +553,8 @@ class MetaModelFusion:
         # Charger le méta-modèle
         meta_model_path = input_path / "meta_model.pkl"
         if meta_model_path.exists():
-            with open(meta_model_path, 'rb') as f:
-                self.meta_model = pickle.load(f)
+            # Chargement vérifié par SHA-256 (anti-RCE), voir safe_model_loader.
+            self.meta_model = safe_pickle_load(meta_model_path)
             logger.info(f"✅ Méta-modèle chargé: {meta_model_path}")
         
         # Charger les poids

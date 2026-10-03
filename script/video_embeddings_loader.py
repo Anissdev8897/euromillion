@@ -5,10 +5,14 @@ Helper pour charger les embeddings vidéo
 À utiliser dans votre script d'entraînement principal
 """
 
-import pickle
 import logging
 from pathlib import Path
 from typing import Dict, Any
+
+try:
+    from safe_model_loader import safe_pickle_load  # type: ignore
+except ImportError:  # pragma: no cover - selon le chemin d'import
+    from script.safe_model_loader import safe_pickle_load  # type: ignore
 
 logger = logging.getLogger("VideoEmbeddingsLoader")
 
@@ -44,10 +48,10 @@ def load_video_embeddings(encoded_videos_dir: str = "encoded_videos") -> Dict[st
             # Extraire le nom de la vidéo
             video_name = pkl_file.stem.replace("_embedding", "")
             
-            # Charger l'embedding
-            with open(pkl_file, 'rb') as f:
-                embedding = pickle.load(f)
-            
+            # Charger l'embedding après vérification d'intégrité (anti-RCE).
+            # En mode strict, un fichier non vérifié lève et est ignoré ci-dessous.
+            embedding = safe_pickle_load(pkl_file)
+
             embeddings[video_name] = embedding
             
         except Exception as e:

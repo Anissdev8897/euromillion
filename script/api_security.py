@@ -71,6 +71,54 @@ def check_api_key(provided: Optional[str]) -> Tuple[bool, str]:
 
 
 # ---------------------------------------------------------------------------
+# Extraction sûre de l'IP cliente (derrière reverse-proxy)
+# ---------------------------------------------------------------------------
+def parse_trusted_proxies(raw: Optional[str] = None) -> List[str]:
+    """IP des proxies de confiance (CSV) dont on accepte le X-Forwarded-For."""
+    if raw is None:
+        raw = os.environ.get("TRUSTED_PROXIES", "")
+    return [p.strip() for p in raw.split(",") if p.strip()]
+
+
+def client_ip(
+    remote_addr: Optional[str],
+    forwarded_for: Optional[str] = None,
+    trusted_proxies: Optional[List[str]] = None,
+) -> str:
+    """Résout l'IP réelle du client.
+
+    N'accepte X-Forwarded-For QUE si la connexion vient d'un proxy de confiance
+    (sinon un client pourrait usurper son IP pour contourner le rate-limit).
+    Sans proxy de confiance configuré, se rabat sur remote_addr.
+    """
+    remote_addr = (remote_addr or "").strip()
+    if trusted_proxies and remote_addr in trusted_proxies and forwarded_for:
+        first = forwarded_for.split(",")[0].strip()
+        if first:
+            return first
+    return remote_addr or "unknown"
+
+
+def rate_limit_per_min(raw: Optional[str] = None) -> Optional[int]:
+    """Lit RATE_LIMIT_PER_MIN. None = rate-limiting désactivé (défaut sûr).
+
+    Désactivé par défaut car, derrière un proxy qui ne transmet pas d'IP
+    cliente distincte, une limite par IP s'appliquerait globalement à tout le
+    trafic. L'activer suppose un X-Forwarded-For fiable (voir client_ip).
+    """
+    if raw is None:
+        raw = os.environ.get("RATE_LIMIT_PER_MIN", "")
+    raw = str(raw).strip()
+    if not raw:
+        return None
+    try:
+        value = int(raw)
+    except ValueError:
+        return None
+    return value if value > 0 else None
+
+
+# ---------------------------------------------------------------------------
 # CORS : origines autorisées
 # ---------------------------------------------------------------------------
 DEFAULT_CORS_ORIGINS = [

@@ -113,6 +113,48 @@ class TestRateLimiter(unittest.TestCase):
         self.assertTrue(rl.allow("b"))  # une autre IP n'est pas affectée
 
 
+class TestClientIpAndConfig(unittest.TestCase):
+    def setUp(self):
+        for k in ("TRUSTED_PROXIES", "RATE_LIMIT_PER_MIN"):
+            os.environ.pop(k, None)
+
+    def tearDown(self):
+        for k in ("TRUSTED_PROXIES", "RATE_LIMIT_PER_MIN"):
+            os.environ.pop(k, None)
+
+    def test_no_trusted_proxy_uses_remote_addr(self):
+        # XFF ignoré si la connexion ne vient pas d'un proxy de confiance.
+        self.assertEqual(
+            sec.client_ip("203.0.113.9", "1.2.3.4", trusted_proxies=[]), "203.0.113.9"
+        )
+
+    def test_trusted_proxy_uses_forwarded_for(self):
+        self.assertEqual(
+            sec.client_ip("10.0.0.1", "203.0.113.9, 10.0.0.1", trusted_proxies=["10.0.0.1"]),
+            "203.0.113.9",
+        )
+
+    def test_spoofed_xff_rejected_from_untrusted(self):
+        # remote_addr n'est pas un proxy de confiance -> XFF (spoofable) ignoré.
+        self.assertEqual(
+            sec.client_ip("198.51.100.7", "1.1.1.1", trusted_proxies=["10.0.0.1"]),
+            "198.51.100.7",
+        )
+
+    def test_empty_remote_addr(self):
+        self.assertEqual(sec.client_ip(None, None, None), "unknown")
+
+    def test_rate_limit_per_min_parsing(self):
+        self.assertIsNone(sec.rate_limit_per_min(""))
+        self.assertIsNone(sec.rate_limit_per_min("0"))
+        self.assertIsNone(sec.rate_limit_per_min("abc"))
+        self.assertEqual(sec.rate_limit_per_min("30"), 30)
+
+    def test_trusted_proxies_parsing(self):
+        self.assertEqual(sec.parse_trusted_proxies("10.0.0.1, 10.0.0.2"), ["10.0.0.1", "10.0.0.2"])
+        self.assertEqual(sec.parse_trusted_proxies(""), [])
+
+
 class TestSanitizedError(unittest.TestCase):
     def test_shape_and_no_leak(self):
         err = sec.sanitized_error()
@@ -175,6 +217,15 @@ class TestSafeModelLoader(unittest.TestCase):
         man = self._manifest({"autre.pkl": self.digest})
         result = sml.safe_load(self.model, lambda p: "LOADED", manifest_path=man, strict=False)
         self.assertEqual(result, "LOADED")
+
+
+class TestManifestGenerator(unittest.TestCase):
+    def test_importable_and_empty_scan(self):
+        import generate_model_manifest as gm
+        manifest = gm.generate(["__repertoire_inexistant__"])
+        self.assertEqual(manifest["algorithm"], "sha256")
+        self.assertEqual(manifest["count"], 0)
+        self.assertEqual(manifest["files"], {})
 
 
 if __name__ == "__main__":

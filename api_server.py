@@ -25,13 +25,8 @@ logging.basicConfig(
 )
 logger = logging.getLogger("EuromillionsAPI")
 
-# Gestion de flask-cors optionnel
-try:
-    from flask_cors import CORS
-    CORS_AVAILABLE = True
-except ImportError:
-    CORS_AVAILABLE = False
-    logger.warning("flask-cors non disponible. Les requêtes CORS peuvent échouer.")
+# CORS désormais géré manuellement (origines restreintes) via _apply_cors,
+# sans dépendance à flask-cors ; voir plus bas le after_request.
 
 # Ajouter le répertoire script au path
 script_dir = Path(__file__).parent / "script"
@@ -42,16 +37,97 @@ parent_dir = Path(__file__).parent
 sys.path.insert(0, str(parent_dir))
 
 app = Flask(__name__)
-if CORS_AVAILABLE:
-    CORS(app)  # Autoriser les requêtes cross-origin depuis l'interface HTML
+
+# --- Durcissement sécurité : câblage des helpers de script/api_security.py ---
+# Toute la logique testable vit dans api_security (sans Flask) ; ici, glue mince.
+from functools import wraps  # noqa: E402
+
+try:
+    from script.api_security import (  # type: ignore
+        API_KEY_HEADER, RateLimiter, auth_enabled, check_api_key, client_ip,
+        is_origin_allowed, new_correlation_id, parse_cors_origins,
+        parse_trusted_proxies, rate_limit_per_min, sanitized_error,
+    )
+except ImportError:
+    from api_security import (  # type: ignore
+        API_KEY_HEADER, RateLimiter, auth_enabled, check_api_key, client_ip,
+        is_origin_allowed, new_correlation_id, parse_cors_origins,
+        parse_trusted_proxies, rate_limit_per_min, sanitized_error,
+    )
+
+ALLOWED_ORIGINS = parse_cors_origins()
+TRUSTED_PROXIES = parse_trusted_proxies()
+_RL_PER_MIN = rate_limit_per_min()
+_RATE_LIMITER = RateLimiter(max_requests=_RL_PER_MIN, window_seconds=60) if _RL_PER_MIN else None
+
+if auth_enabled():
+    logger.info("Auth API activée : X-API-Key requis sur /api/predict.")
 else:
-    # Solution de secours pour CORS
-    @app.after_request
-    def after_request(response):
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-        response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-        return response
+    logger.warning(
+        "API_KEY non définie : /api/predict reste ouvert (comportement historique). "
+        "Définir API_KEY pour exiger une clé."
+    )
+if _RATE_LIMITER:
+    logger.info("Rate-limiting actif : %s req/min/IP.", _RL_PER_MIN)
+else:
+    logger.info("Rate-limiting désactivé (définir RATE_LIMIT_PER_MIN pour l'activer).")
+
+
+def _client_ip():
+    return client_ip(
+        request.remote_addr, request.headers.get("X-Forwarded-For"), TRUSTED_PROXIES
+    )
+
+
+@app.after_request
+def _apply_cors(response):
+    """CORS restreint aux origines autorisées (plus de wildcard '*')."""
+    origin = request.headers.get("Origin")
+    if origin and is_origin_allowed(origin, ALLOWED_ORIGINS):
+        response.headers["Access-Control-Allow-Origin"] = origin
+        response.headers["Access-Control-Allow-Credentials"] = "true"
+        response.headers["Vary"] = "Origin"
+        response.headers["Access-Control-Allow-Headers"] = (
+            "Content-Type, Authorization, " + API_KEY_HEADER
+        )
+        response.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
+    return response
+
+
+def require_api_key(fn):
+    """Exige X-API-Key UNIQUEMENT si API_KEY est configurée (sinon no-op)."""
+
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if request.method == "OPTIONS":
+            return fn(*args, **kwargs)
+        ok, reason = check_api_key(request.headers.get(API_KEY_HEADER))
+        if not ok:
+            cid = new_correlation_id()
+            logger.warning("Auth refusée (%s) cid=%s ip=%s", reason, cid, _client_ip())
+            return jsonify(sanitized_error("Clé d'API invalide ou manquante.", cid)), 401
+        return fn(*args, **kwargs)
+
+    return wrapper
+
+
+def rate_limit(fn):
+    """Applique le rate-limiting par IP si RATE_LIMIT_PER_MIN est défini."""
+
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        if _RATE_LIMITER is not None and request.method != "OPTIONS":
+            ip = _client_ip()
+            if not _RATE_LIMITER.allow(ip):
+                cid = new_correlation_id()
+                logger.warning("Rate limit dépassé ip=%s cid=%s", ip, cid)
+                resp = jsonify(sanitized_error("Trop de requêtes. Réessayez plus tard.", cid))
+                resp.status_code = 429
+                resp.headers["Retry-After"] = str(_RATE_LIMITER.retry_after(ip))
+                return resp
+        return fn(*args, **kwargs)
+
+    return wrapper
 
 # Configuration
 # ⚠️ CRITIQUE : Type de jeu (euromillions ou loto) - peut être défini via variable d'environnement
@@ -61,7 +137,7 @@ GAME_TYPE = os.environ.get("GAME_TYPE", "euromillions").lower()  # Par défaut: 
 CSV_FILE = Path(__file__).parent / f"tirage_{GAME_TYPE}_complet.csv"
 OUTPUT_DIR = Path(__file__).parent / f"resultats_{GAME_TYPE}"
 MODEL_DIR = Path(__file__).parent / f"models_{GAME_TYPE}"
-SERVER_IP = os.environ.get("SERVER_IP", os.environ.get("VPS_IP", "107.189.17.46"))
+SERVER_IP = os.environ.get("SERVER_IP", os.environ.get("VPS_IP", ""))
 
 # Configuration de l'entraînement
 # Mettre à False pour désactiver l'entraînement automatique (entraînement sur PC local uniquement)
@@ -94,12 +170,12 @@ def index():
         except Exception as e:
             logger.error(f"Erreur lors du chargement du fichier HTML: {str(e)}")
             logger.error(traceback.format_exc())
-            return f"<html><body><h1>Erreur</h1><p>Erreur lors du chargement: {str(e)}</p></body></html>", 500
+            return "<html><body><h1>Erreur</h1><p>Une erreur interne est survenue.</p></body></html>", 500
     else:
         logger.error(f"Fichier HTML non trouvé: {html_file}")
         return jsonify({
             "status": "error",
-            "message": f"Fichier HTML non trouvé: {html_file}",
+            "message": "Interface HTML indisponible.",
             "endpoints": {
                 "/api/predict": "POST - Générer des prédictions",
                 "/api/methods": "GET - Liste des méthodes disponibles",
@@ -128,12 +204,12 @@ def euromillion_html():
         except Exception as e:
             logger.error(f"Erreur lors du chargement du fichier HTML: {str(e)}")
             logger.error(traceback.format_exc())
-            return f"<html><body><h1>Erreur</h1><p>Erreur lors du chargement: {str(e)}</p></body></html>", 500
+            return "<html><body><h1>Erreur</h1><p>Une erreur interne est survenue.</p></body></html>", 500
     else:
         logger.error(f"Fichier HTML non trouvé: {html_file}")
         return jsonify({
             "status": "error",
-            "message": f"Fichier euromillion.html non trouvé: {html_file}"
+            "message": "Interface HTML indisponible."
         }), 404
 
 
@@ -144,7 +220,6 @@ def test():
     return jsonify({
         "status": "success",
         "message": "API EuroMillions fonctionnelle",
-        "server_ip": SERVER_IP,
         "path": request.path,
         "timestamp": datetime.now().isoformat()
     })
@@ -156,26 +231,16 @@ def status():
     """Vérifier le statut de l'API et des fichiers nécessaires"""
     try:
         csv_exists = CSV_FILE.exists()
-        csv_size = CSV_FILE.stat().st_size if csv_exists else 0
-        
+        # Ne pas exposer de chemins absolus ni l'IP du serveur (fuite d'info).
         return jsonify({
             "status": "success",
             "api": "running",
-            "server_ip": SERVER_IP,
-            "csv_file": {
-                "path": str(CSV_FILE),
-                "exists": csv_exists,
-                "size": csv_size
-            },
-            "output_dir": str(OUTPUT_DIR),
-            "model_dir": str(MODEL_DIR)
+            "data_available": csv_exists
         })
     except Exception as e:
-        logger.error(f"Erreur lors de la vérification du statut: {str(e)}")
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+        cid = new_correlation_id()
+        logger.error("Erreur statut cid=%s: %s", cid, str(e))
+        return jsonify(sanitized_error("Erreur lors de la vérification du statut.", cid)), 500
 
 
 @app.route('/api/methods', methods=['GET'])
@@ -218,6 +283,8 @@ def get_methods():
 
 @app.route('/api/predict', methods=['POST'])
 @app.route('/euromillions/api/predict', methods=['POST'])
+@rate_limit
+@require_api_key
 def predict():
     """Générer des prédictions EuroMillions"""
     try:
@@ -244,7 +311,7 @@ def predict():
         if not CSV_FILE.exists():
             return jsonify({
                 "status": "error",
-                "message": f"Fichier CSV non trouvé: {CSV_FILE}"
+                "message": "Données de tirages indisponibles."
             }), 404
         
         logger.info(f"Génération de {num_combinations} combinaisons avec la méthode '{method}'")
@@ -320,16 +387,15 @@ def predict():
         })
         
     except Exception as e:
-        logger.error(f"Erreur lors de la prédiction: {str(e)}")
+        cid = new_correlation_id()
+        logger.error("Erreur prédiction cid=%s: %s", cid, str(e))
         logger.error(traceback.format_exc())
-        return jsonify({
-            "status": "error",
-            "message": f"Erreur lors de la génération des prédictions: {str(e)}"
-        }), 500
+        return jsonify(sanitized_error("Erreur lors de la génération des prédictions.", cid)), 500
 
 
 @app.route('/api/predict/simple', methods=['POST'])
 @app.route('/euromillions/api/predict/simple', methods=['POST'])
+@rate_limit
 def predict_simple():
     """Générer des prédictions simples (méthode rapide)"""
     try:
@@ -391,11 +457,9 @@ def predict_simple():
         })
         
     except Exception as e:
-        logger.error(f"Erreur lors de la prédiction simple: {str(e)}")
-        return jsonify({
-            "status": "error",
-            "message": str(e)
-        }), 500
+        cid = new_correlation_id()
+        logger.error("Erreur prédiction simple cid=%s: %s", cid, str(e))
+        return jsonify(sanitized_error("Erreur lors de la génération des prédictions.", cid)), 500
 
 
 @app.errorhandler(404)
@@ -405,7 +469,7 @@ def not_found(error):
     if request.is_json or request.path.startswith('/api/'):
         return jsonify({
             "status": "error",
-            "message": f"Endpoint non trouvé: {request.path}",
+            "message": "Endpoint non trouvé.",
             "available_endpoints": [
                 "/api/predict",
                 "/api/predict/simple",
@@ -559,7 +623,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Serveur API EuroMillions/Loto')
     parser.add_argument('--host', default=os.environ.get('HOST', '0.0.0.0'), help='Adresse IP du serveur')
     parser.add_argument('--port', type=int, default=int(os.environ.get('PORT', 5002)), help='Port du serveur')
-    parser.add_argument('--debug', action='store_true', default=os.environ.get('FLASK_ENV', 'production') == 'development', help='Mode debug')
+    parser.add_argument('--debug', action='store_true', default=False, help='Mode debug (NE JAMAIS activer en production)')
     args = parser.parse_args()
     
     logger.info(f"Démarrage du serveur API {GAME_TYPE.upper()}...")

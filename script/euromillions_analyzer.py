@@ -60,6 +60,10 @@ import joblib
 from joblib import parallel_backend  # Pour forcer le backend threading sur Windows
 from sklearn.cluster import KMeans
 import traceback
+try:
+    from safe_model_loader import safe_joblib_load, ModelIntegrityError  # type: ignore
+except ImportError:  # pragma: no cover
+    from script.safe_model_loader import safe_joblib_load, ModelIntegrityError  # type: ignore
 
 # ⚠️ CRITIQUE : Patcher joblib pour éviter l'erreur _count_physical_cores sur Windows
 if platform.system() == 'Windows':
@@ -299,8 +303,10 @@ class EuromillionsAdvancedAnalyzer:
             scaler_numbers_path = self.model_dir / "scaler_numbers.joblib"
             if scaler_numbers_path.exists():
                 try:
-                    self.scaler_numbers = joblib.load(scaler_numbers_path)
+                    self.scaler_numbers = safe_joblib_load(scaler_numbers_path)
                     logger.info(f"✅ Scaler numéros chargé depuis {scaler_numbers_path}")
+                except ModelIntegrityError:
+                    raise  # mode strict : ne pas substituer silencieusement un scaler vide
                 except Exception as e:
                     logger.warning(f"Impossible de charger le scaler numéros: {str(e)}. Création d'un nouveau scaler.")
                     self.scaler_numbers = StandardScaler()
@@ -308,11 +314,15 @@ class EuromillionsAdvancedAnalyzer:
             scaler_stars_path = self.model_dir / "scaler_stars.joblib"
             if scaler_stars_path.exists():
                 try:
-                    self.scaler_stars = joblib.load(scaler_stars_path)
+                    self.scaler_stars = safe_joblib_load(scaler_stars_path)
                     logger.info(f"✅ Scaler étoiles chargé depuis {scaler_stars_path}")
+                except ModelIntegrityError:
+                    raise  # mode strict : ne pas substituer silencieusement un scaler vide
                 except Exception as e:
                     logger.warning(f"Impossible de charger le scaler étoiles: {str(e)}. Création d'un nouveau scaler.")
                     self.scaler_stars = StandardScaler()
+        except ModelIntegrityError:
+            raise  # propager le refus d'intégrité au lieu de l'avaler ici
         except Exception as e:
             logger.warning(f"Erreur lors du chargement des scalers: {str(e)}")
             # Continuer avec des scalers vides
@@ -3359,10 +3369,12 @@ class EuromillionsAdvancedAnalyzer:
         history_path = self.output_dir / history_file
         if history_path.exists():
             try:
-                data = joblib.load(history_path)
+                data = safe_joblib_load(history_path)
                 self.generated_combinations_history = data.get('combinations', [])
                 self.performance_history = data.get('performance', [])
                 logger.info(f"Historique chargé depuis {history_path}")
+            except ModelIntegrityError:
+                raise  # mode strict : ne pas charger un historique non vérifié
             except Exception as e:
                 logger.error(f"Erreur lors du chargement de l'historique depuis {history_path}: {e}")
         else:
