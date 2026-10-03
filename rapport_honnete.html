@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EuroMillions — Analyse honnête</title>
+<style>
+  :root {
+    --bg: #0f1221;
+    --card: #1a1f35;
+    --card2: #222844;
+    --text: #e8ebf5;
+    --muted: #9aa3c0;
+    --accent: #6c7bff;
+    --accent2: #f5576c;
+    --ok: #35c28a;
+    --warn: #e0a800;
+    --border: rgba(255,255,255,.08);
+    --shadow: 0 10px 40px rgba(0,0,0,.45);
+  }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+      --bg: #f3f5fb; --card: #ffffff; --card2: #f0f2fa; --text: #1c2237;
+      --muted: #5a6279;
+      --border: rgba(0,0,0,.08); --shadow: 0 10px 30px rgba(20,30,70,.12);
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.55;
+    padding: 24px 16px; -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; }
+  header { text-align: center; margin-bottom: 28px; }
+  h1 { font-size: 1.9rem; letter-spacing: -.5px; }
+  h1 .star { color: var(--accent2); }
+  .sub { color: var(--muted); margin-top: 6px; font-size: 1.02rem; }
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; padding: 22px 22px; margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  h2 { font-size: 1.15rem; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  p { color: var(--text); }
+  .muted { color: var(--muted); }
+  .banner {
+    background: linear-gradient(135deg, rgba(108,123,255,.15), rgba(245,87,108,.12));
+    border: 1px solid var(--border); border-left: 4px solid var(--accent2);
+  }
+  .banner strong { color: var(--text); }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 620px) { .grid2 { grid-template-columns: 1fr; } }
+  .stat {
+    background: var(--card2); border: 1px solid var(--border); border-radius: 12px;
+    padding: 14px 16px;
+  }
+  .stat .big { font-size: 1.5rem; font-weight: 700; }
+  .stat .lbl { color: var(--muted); font-size: .85rem; text-transform: uppercase; letter-spacing: .5px; }
+  .verdict { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: .8rem; font-weight: 600; }
+  .verdict.ok { background: rgba(53,194,138,.16); color: var(--ok); }
+  table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  th, td { text-align: left; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 600; font-size: .82rem; text-transform: uppercase; }
+  td.num { font-variant-numeric: tabular-nums; }
+  .bar { height: 8px; background: var(--accent); border-radius: 6px; }
+  .balls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 14px 0; }
+  .ball {
+    width: 46px; height: 46px; border-radius: 50%; display: flex; align-items: center;
+    justify-content: center; font-weight: 700; color: #fff;
+    background: linear-gradient(135deg, var(--accent), #8a6cff);
+    box-shadow: 0 4px 12px rgba(108,123,255,.35); font-variant-numeric: tabular-nums;
+  }
+  .ball.star { background: linear-gradient(135deg, var(--accent2), #ff9a5a); }
+  .btn {
+    appearance: none; border: none; cursor: pointer; font-size: 1rem; font-weight: 600;
+    padding: 12px 22px; border-radius: 10px; color: #fff;
+    background: linear-gradient(135deg, var(--accent), #8a6cff);
+    box-shadow: 0 6px 16px rgba(108,123,255,.35); transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .pill { background: var(--card2); border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; font-size: .9rem; }
+  .pop { font-size: .82rem; color: var(--muted); }
+  .footer { text-align: center; color: var(--muted); font-size: .85rem; margin-top: 10px; }
+  code { background: var(--card2); padding: 1px 6px; border-radius: 6px; font-size: .88rem; }
+  a { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>EuroMillions <span class="star">★</span> Analyse honnête</h1>
+    <p class="sub">Statistiques rigoureuses, sans fausse promesse de prédiction</p>
+  </header>
+
+  <div class="card banner">
+    <h2>⚠️ Ce que dit la science</h2>
+    <p>L'EuroMillions est un tirage <strong>aléatoire et équitable</strong>. Chaque tirage est
+    indépendant : les tirages passés n'ont <strong>aucune influence</strong> sur les suivants.
+    Toutes les combinaisons ont exactement la même probabilité. <strong>Aucune intelligence
+    artificielle, aucun « calcul quantique », aucune analyse vidéo ou lunaire ne peut prédire
+    les numéros gagnants.</strong> Tout outil qui le prétend se trompe ou vous trompe.</p>
+  </div>
+
+  <div class="card">
+    <h2>📊 Les vraies probabilités</h2>
+    <div class="grid2">
+      <div class="stat"><div class="lbl">Jackpot (5 n° + 2 étoiles)</div><div class="big">1 sur 139 838 160</div></div>
+      <div class="stat"><div class="lbl">Bons numéros / tirage (moyenne)</div><div class="big">0,50</div></div>
+    </div>
+    <p class="muted" style="margin-top:12px">Jouer sa combinaison fétiche ou une grille « calculée par IA »
+    donne exactement la même chance que cocher 5 numéros au hasard.</p>
+  </div>
+
+  <div class="card">
+    <h2>🎲 Le tirage est-il équitable ? (test du chi²)</h2>
+    <p class="muted" style="margin-bottom:12px">Sur les 955 tirages du format actuel (12 étoiles).
+    Une p-value &gt; 0,05 signifie « parfaitement compatible avec le hasard ».</p>
+    <div class="grid2">
+      <div class="stat"><div class="lbl">Numéros (1–50)</div><div class="big">p = 0,73 <span class="verdict ok">équitable</span></div></div>
+      <div class="stat"><div class="lbl">Étoiles (1–12)</div><div class="big">p = 0,16 <span class="verdict ok">équitable</span></div></div>
+    </div>
+    <p class="muted" style="margin-top:12px">Les écarts de fréquence entre numéros sont du simple
+    bruit statistique : il n'existe pas de numéro réellement « chaud » ou « froid ».</p>
+  </div>
+
+  <div class="card">
+    <h2>🔬 Preuve : aucune stratégie ne bat le hasard</h2>
+    <p class="muted" style="margin-bottom:12px">Backtest « walk-forward » sur 400 tirages : pour chaque
+    tirage, la stratégie choisit 5 numéros à partir du seul passé. Moyenne de bons numéros :</p>
+    <table>
+      <thead><tr><th>Stratégie</th><th>Bons n° / tirage</th><th></th></tr></thead>
+      <tbody>
+        <tr><td>Aléatoire (référence)</td><td class="num">0,47</td><td><div class="bar" style="width:47%"></div></td></tr>
+        <tr><td>Numéros « chauds »</td><td class="num">0,48</td><td><div class="bar" style="width:48%"></div></td></tr>
+        <tr><td>Numéros « froids »</td><td class="num">0,47</td><td><div class="bar" style="width:47%"></div></td></tr>
+        <tr><td>Numéros « en retard »</td><td class="num">0,48</td><td><div class="bar" style="width:48%"></div></td></tr>
+      </tbody>
+    </table>
+    <p class="muted" style="margin-top:12px">Toutes les stratégies obtiennent le même résultat que le
+    hasard. C'est la démonstration empirique qu'aucune n'a de pouvoir prédictif.</p>
+  </div>
+
+  <div class="card">
+    <h2>💡 La seule optimisation honnête : la valeur espérée</h2>
+    <p>On ne peut pas augmenter la probabilité de <em>gagner</em>, mais on peut augmenter le gain
+    <em>si on gagne</em>. Beaucoup de joueurs cochent des dates (≤ 31), des suites ou des motifs
+    réguliers. En évitant ces grilles populaires, vous partagez moins souvent le jackpot.</p>
+    <div class="row" style="margin:16px 0">
+      <button class="btn" id="gen">🎰 Générer des grilles peu populaires</button>
+      <span class="pill">Même chance de gagner · moins de partage</span>
+    </div>
+    <div id="out"></div>
+    <p class="footer">Ces grilles sont tirées au hasard puis filtrées pour éviter les motifs populaires.
+    Elles n'augmentent <strong>pas</strong> votre probabilité de gain.</p>
+  </div>
+
+  <div class="card banner" style="border-left-color: var(--warn)">
+    <h2>🛟 Jouer de façon responsable</h2>
+    <p class="muted">Le loto est un divertissement, pas un plan financier. Ne misez que ce que vous
+    pouvez perdre. En cas de difficulté liée au jeu : <strong>09 74 75 13 13</strong> (Joueurs Info
+    Service, France, appel non surtaxé).</p>
+  </div>
+</div>
+
+<script>
+  "use strict";
+  const MAIN = {min: 1, max: 50, count: 5};
+  const STAR = {min: 1, max: 12, count: 2};
+
+  function sample(min, max, k) {
+    const pool = [];
+    for (let i = min; i <= max; i++) pool.push(i);
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [pool[i], pool[j]] = [pool[j], pool[i]];
+    }
+    return pool.slice(0, k).sort((a, b) => a - b);
+  }
+
+  // Même heuristique que script/analyse_statistique.py : popularity_score.
+  function popularity(nums) {
+    const s = [...nums].sort((a, b) => a - b);
+    let score = 0;
+    if (s.every(n => n <= 31)) score += 0.45;
+    else score += 0.20 * (s.filter(n => n <= 31).length / s.length);
+    const diffs = s.slice(1).map((v, i) => v - s[i]);
+    if (new Set(diffs).size === 1) score += 0.25;
+    score += 0.05 * diffs.filter(d => d === 1).length;
+    const total = s.reduce((a, b) => a + b, 0);
+    score += 0.15 * Math.max(0, 1 - Math.abs(total - 128) / 60);
+    if (s[s.length - 1] - s[0] <= 10) score += 0.10;
+    return Math.min(score, 1);
+  }
+
+  function generate(n, maxPop) {
+    const grids = [], seen = new Set();
+    let tries = 0;
+    while (grids.length < n && tries < 20000) {
+      tries++;
+      const nums = sample(MAIN.min, MAIN.max, MAIN.count);
+      const key = nums.join("-");
+      if (seen.has(key)) continue;
+      const pop = popularity(nums);
+      if (pop > maxPop) continue;
+      seen.add(key);
+      grids.push({nums, stars: sample(STAR.min, STAR.max, STAR.count), pop});
+    }
+    return grids;
+  }
+
+  function render(grids) {
+    const out = document.getElementById("out");
+    out.innerHTML = "";
+    grids.forEach((g, i) => {
+      const wrap = document.createElement("div");
+      wrap.style.marginBottom = "6px";
+      const balls = document.createElement("div");
+      balls.className = "balls";
+      g.nums.forEach(n => {
+        const b = document.createElement("div"); b.className = "ball"; b.textContent = n; balls.appendChild(b);
+      });
+      const sep = document.createElement("span"); sep.textContent = "★"; sep.style.color = "var(--accent2)"; balls.appendChild(sep);
+      g.stars.forEach(s => {
+        const b = document.createElement("div"); b.className = "ball star"; b.textContent = s; balls.appendChild(b);
+      });
+      const pop = document.createElement("span");
+      pop.className = "pop";
+      pop.textContent = "popularité estimée : " + (g.pop * 100).toFixed(0) + "%";
+      balls.appendChild(pop);
+      wrap.appendChild(balls);
+      out.appendChild(wrap);
+    });
+  }
+
+  document.getElementById("gen").addEventListener("click", () => render(generate(5, 0.25)));
+  render(generate(5, 0.25));
+</script>
+</body>
+</html>

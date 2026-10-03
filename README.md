@@ -1,8 +1,43 @@
-# 💶 Système de Prédiction EuroMillions Optimisé v2.0
- 
+# 💶 Système d'Analyse EuroMillions v2.0
+
+> ## ⚠️ Avertissement scientifique — à lire en premier
+>
+> **L'EuroMillions est un tirage aléatoire équitable : il est mathématiquement
+> impossible de prédire les numéros gagnants.** Chaque tirage est indépendant et
+> toutes les combinaisons ont la même probabilité (1 sur **139 838 160**). Aucun
+> modèle de ce dépôt — Machine Learning, Deep Learning, « Quantum ML », analyse
+> vidéo, cycles lunaires, Fibonacci — ne peut faire mieux que le hasard. Toute
+> « précision » élevée affichée sur l'historique est du **surapprentissage**, pas
+> une capacité de prédiction.
+>
+> Ce que ce projet peut faire **honnêtement** : décrire l'historique, **vérifier
+> que le tirage est équitable** (test du chi²), **prouver** par un backtest que
+> les stratégies « chauds/froids » ne battent pas le hasard, et optimiser la
+> **valeur espérée** (jouer des grilles peu populaires pour partager moins le
+> jackpot — sans augmenter la probabilité de gagner).
+>
+> 👉 Voir [`docs/METHODOLOGIE.md`](docs/METHODOLOGIE.md), le module
+> [`script/analyse_statistique.py`](script/analyse_statistique.py) et le tableau
+> de bord [`rapport_honnete.html`](rapport_honnete.html).
+>
+> Jouer reste un divertissement, jamais un plan financier. Aide : **09 74 75 13 13**.
+
 ## 📋 Vue d'ensemble
 
-Ce système utilise des algorithmes avancés de Machine Learning, Deep Learning (QLSTM), et même Quantum ML (via PennyLane) pour analyser les tirages EuroMillions et proposer des prédictions optimisées.
+Ce dépôt contient des outils d'analyse statistique des tirages EuroMillions.
+Les modules historiques (ci-dessous) explorent des algorithmes de Machine
+Learning, Deep Learning et « Quantum ML » ; ils sont conservés à titre
+expérimental mais, conformément à l'avertissement ci-dessus, **ne prédisent pas**
+les tirages. Le module de référence, honnête et sans dépendance lourde, est
+`script/analyse_statistique.py`.
+
+### ✅ Démarrage rapide (analyse honnête, sans installation)
+
+```bash
+python3 script/analyse_statistique.py              # rapport complet
+python3 script/analyse_statistique.py --generate 5 # grilles à valeur espérée optimisée
+python3 script/test_analyse_statistique.py         # tests unitaires
+```
 
 ### 🛠 Spécifications Techniques
 
