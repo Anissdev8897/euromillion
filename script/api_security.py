@@ -16,7 +16,7 @@ Toutes les protections « cassables » sont OPT-IN par variable d'environnement
 pour ne pas interrompre un déploiement existant :
   - API_KEY (ou EUROMILLIONS_API_KEY) : si définie, l'auth est exigée.
   - CORS_ORIGINS : liste CSV d'origines autorisées (défaut : domaine + localhost).
-  - RATE_LIMIT_PER_MIN : nombre de requêtes/minute/IP (défaut 30).
+  - RATE_LIMIT_PER_MIN : nombre de requêtes/minute/IP (défaut : désactivé).
 """
 
 from __future__ import annotations
@@ -88,14 +88,18 @@ def client_ip(
     """Résout l'IP réelle du client.
 
     N'accepte X-Forwarded-For QUE si la connexion vient d'un proxy de confiance
-    (sinon un client pourrait usurper son IP pour contourner le rate-limit).
+    (sinon un client pourrait usurper son IP pour contourner le rate-limit), et
+    prend l'entrée la PLUS À DROITE de l'en-tête : c'est celle apposée par le
+    proxy de confiance (le pair qu'il a réellement vu). Les entrées de gauche
+    sont fournies par le client et donc usurpables. Pour une chaîne de N proxies
+    de confiance, configurer le proxy pour n'exposer que l'IP cliente.
     Sans proxy de confiance configuré, se rabat sur remote_addr.
     """
     remote_addr = (remote_addr or "").strip()
     if trusted_proxies and remote_addr in trusted_proxies and forwarded_for:
-        first = forwarded_for.split(",")[0].strip()
-        if first:
-            return first
+        hops = [h.strip() for h in forwarded_for.split(",") if h.strip()]
+        if hops:
+            return hops[-1]
     return remote_addr or "unknown"
 
 
@@ -195,9 +199,12 @@ class RateLimiter:
         with self._lock:
             dq = self._hits.get(key)
             if dq is None:
-                # Garde-fou mémoire : éviction grossière si trop de clés.
+                # Garde-fou mémoire : éviction bornée des clés les plus
+                # anciennement insérées (dict ordonné), sans réinitialiser
+                # l'état des clients actifs.
                 if len(self._hits) >= self._max_keys:
-                    self._hits.clear()
+                    for old_key in list(self._hits)[: max(1, self._max_keys // 10)]:
+                        del self._hits[old_key]
                 dq = deque()
                 self._hits[key] = dq
             self._prune(dq, now)

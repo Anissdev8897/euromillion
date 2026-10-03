@@ -1,5 +1,5 @@
 Flask>=2.0.0
-flask-cors>=3.0.0
+# CORS géré manuellement dans api_server.py (origines restreintes), sans flask-cors.
 # Serveurs WSGI de PRODUCTION (ne pas exposer le serveur de dev Flask).
 # Linux : gunicorn -w 2 -k gthread -b 127.0.0.1:5002 wsgi:app
 # Windows : waitress-serve --listen=127.0.0.1:5002 wsgi:app

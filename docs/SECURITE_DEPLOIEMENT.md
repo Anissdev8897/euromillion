@@ -22,6 +22,15 @@ waitress-serve --listen=127.0.0.1:5002 wsgi:app
 `gunicorn` / `waitress` sont dans `requirements_api.txt`. Lier à `127.0.0.1`
 et n'exposer au public que **via le reverse-proxy** (IIS/nginx) en HTTPS.
 
+> ⚠️ **Mise à jour automatique des tirages.** Lancé en dev (`python
+> api_server.py`), le serveur exécute `initialize_system()` (scraping FDJ +
+> scheduler mardis/vendredis 22h). Sous gunicorn/waitress, `wsgi:app`
+> n'exécute cette initialisation **que si** `WSGI_RUN_INIT=1`. Pour conserver
+> la MAJ auto, définir `WSGI_RUN_INIT=1` **avec un seul worker** (`-w 1`) afin
+> de ne pas dupliquer le scheduler, ou — recommandé en multi-worker —
+> externaliser la MAJ dans un cron / systemd-timer appelant
+> `python3 check_and_train.py` indépendamment du serveur web.
+
 ## 2. Leviers de sécurité applicatifs (variables d'environnement)
 
 | Variable | Défaut | Effet |
@@ -36,6 +45,12 @@ Notes :
 - L'authentification ne s'applique **pas** à `/api/predict/simple` (route
   appelée par le site public sans clé), qui reste protégée par le rate-limiting.
 - `debug` est désormais forcé à `False` ; ne l'activez jamais en production.
+- **Posture par défaut (choix assumé, non cassant)** : sans `API_KEY` ni
+  `RATE_LIMIT_PER_MIN`, `/api/predict` reste ouvert et non limité (la surface
+  DoS de la pile lourde est inchangée). En production, définir au minimum
+  `RATE_LIMIT_PER_MIN` (avec `TRUSTED_PROXIES`), et `API_KEY` si le front peut
+  transmettre la clé. La route lourde `/api/predict` et la route rapide
+  `/api/predict/simple` partagent le même compteur ; prévoir un plafond adapté.
 
 ## 3. Rate-limiting derrière un reverse-proxy (IMPORTANT)
 

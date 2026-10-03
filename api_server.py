@@ -7,7 +7,6 @@ Expose une API REST pour lancer les prédictions depuis l'interface web
 
 import os
 import sys
-import json
 import logging
 from pathlib import Path
 from datetime import datetime
@@ -69,6 +68,12 @@ else:
     )
 if _RATE_LIMITER:
     logger.info("Rate-limiting actif : %s req/min/IP.", _RL_PER_MIN)
+    if not TRUSTED_PROXIES:
+        logger.warning(
+            "RATE_LIMIT_PER_MIN est défini mais TRUSTED_PROXIES est vide : derrière "
+            "un reverse-proxy, toutes les requêtes partageront l'IP du proxy (limite "
+            "globale / étranglement). Renseignez TRUSTED_PROXIES avec l'IP du proxy."
+        )
 else:
     logger.info("Rate-limiting désactivé (définir RATE_LIMIT_PER_MIN pour l'activer).")
 
@@ -99,6 +104,9 @@ def require_api_key(fn):
 
     @wraps(fn)
     def wrapper(*args, **kwargs):
+        # Garde-fou : les préflights OPTIONS sont traités automatiquement par
+        # Flask sans appeler la vue (cette branche ne sert que si OPTIONS est un
+        # jour ajouté explicitement aux methods de la route).
         if request.method == "OPTIONS":
             return fn(*args, **kwargs)
         ok, reason = check_api_key(request.headers.get(API_KEY_HEADER))

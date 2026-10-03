@@ -20,6 +20,10 @@ from datetime import datetime
 from typing import Dict, List, Tuple, Optional, Union, Any
 import traceback
 import warnings
+try:
+    from safe_model_loader import ModelIntegrityError  # type: ignore
+except ImportError:  # pragma: no cover
+    from script.safe_model_loader import ModelIntegrityError  # type: ignore
 
 # Configuration du logging
 logging.basicConfig(
@@ -211,6 +215,8 @@ class EuromillionsTrainer:
                     logger.info("✅ Encodeur avancé activé dans l'analyseur principal")
                     if hasattr(self.analyzers["main"].advanced_encoder, 'ai_reflection') and self.analyzers["main"].advanced_encoder.ai_reflection:
                         logger.info("✅ Système de réflexion IA activé")
+            except ModelIntegrityError:
+                raise  # ne pas masquer un refus d'intégrité des modèles (mode strict)
             except Exception as e:
                 logger.error(f"Erreur lors de l'initialisation de l'analyseur principal: {str(e)}")
         
@@ -240,6 +246,8 @@ class EuromillionsTrainer:
                     logger.info("Module d'apprentissage incrémental initialisé avec l'analyseur principal.")
                 else:
                     logger.warning("⚠️ Analyseur principal non disponible. Apprentissage incrémental désactivé.")
+            except ModelIntegrityError:
+                raise  # ne pas masquer un refus d'intégrité des modèles (mode strict)
             except Exception as e:
                 logger.error(f"Erreur lors de l'initialisation du module d'apprentissage incrémental: {str(e)}")
                 logger.debug(traceback.format_exc())

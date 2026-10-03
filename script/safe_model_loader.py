@@ -21,6 +21,7 @@ Générer le manifeste des modèles de confiance :
 from __future__ import annotations
 
 import hashlib
+import io
 import json
 import logging
 import os
@@ -74,6 +75,22 @@ def _manifest_key(path: Path) -> str:
         return path.name
 
 
+def _expected_hash(
+    path: Path, manifest: Optional[Dict[str, str]]
+) -> Tuple[Optional[str], str]:
+    """Hash attendu pour ce fichier d'après le manifeste, ou (None, raison).
+
+    La clé est le chemin relatif au dépôt (identique côté génération). Pas de
+    repli sur le nom de base seul, pour ne pas accepter un homonyme par hasard.
+    """
+    if manifest is None:
+        return None, "manifeste-absent"
+    expected = manifest.get(_manifest_key(path))
+    if not expected:
+        return None, "hash-non-reference"
+    return expected.lower(), "ok"
+
+
 def verify_file(
     path: str | Path, manifest: Optional[Dict[str, str]]
 ) -> Tuple[bool, str]:
@@ -81,25 +98,25 @@ def verify_file(
     p = Path(path)
     if not p.exists():
         return False, "fichier-absent"
-    if manifest is None:
-        return False, "manifeste-absent"
-    key = _manifest_key(p)
-    expected = manifest.get(key) or manifest.get(p.name)
-    if not expected:
-        return False, "hash-non-reference"
-    actual = sha256_file(p).lower()
-    if actual != expected.lower():
+    expected, reason = _expected_hash(p, manifest)
+    if expected is None:
+        return False, reason
+    if sha256_file(p).lower() != expected:
         return False, "hash-different"
     return True, "ok"
 
 
 def safe_load(
     path: str | Path,
-    loader: Callable[[str], object],
+    loader: Callable[[bytes], object],
     manifest_path: str | Path | None = None,
     strict: Optional[bool] = None,
 ):
     """Charge `path` via `loader` seulement après vérification d'intégrité.
+
+    Anti-TOCTOU : le fichier est lu UNE seule fois en mémoire ; l'octet haché
+    est exactement l'octet désérialisé (`loader` reçoit les octets, pas un
+    chemin ré-ouvert après la vérification).
 
     - strict=True  : refuse tout fichier non vérifié (lève ModelIntegrityError).
     - strict=False : avertit et charge quand même (rétrocompatible).
@@ -108,12 +125,25 @@ def safe_load(
     if strict is None:
         strict = strict_mode()
     manifest = load_manifest(manifest_path)
-    ok, reason = verify_file(path, manifest)
-    if ok:
-        logger.info("Intégrité OK: %s", path)
-        return loader(str(path))
+    p = Path(path)
 
-    msg = f"Intégrité non vérifiée pour {path} (raison={reason})"
+    data: Optional[bytes] = None
+    if not p.exists():
+        ok, reason = False, "fichier-absent"
+    else:
+        data = p.read_bytes()
+        expected, reason = _expected_hash(p, manifest)
+        if expected is None:
+            ok = False
+        else:
+            ok = hashlib.sha256(data).hexdigest().lower() == expected
+            reason = "ok" if ok else "hash-different"
+
+    if ok and data is not None:
+        logger.info("Intégrité OK: %s", p)
+        return loader(data)
+
+    msg = f"Intégrité non vérifiée pour {p} (raison={reason})"
     if strict:
         raise ModelIntegrityError(
             msg + ". Mode strict actif : chargement refusé. "
@@ -123,21 +153,22 @@ def safe_load(
         "%s. Mode non strict : chargement malgré tout. "
         "Définissez EUROMILLIONS_STRICT_MODELS=1 pour refuser.", msg
     )
-    return loader(str(path))
+    if data is None:
+        data = p.read_bytes()
+    return loader(data)
 
 
 def safe_joblib_load(path, manifest_path=None, strict: Optional[bool] = None):
     """joblib.load après vérification d'intégrité (import paresseux de joblib)."""
     import joblib  # import paresseux : évite la dépendance à l'import du module
-    return safe_load(path, joblib.load, manifest_path, strict)
+
+    return safe_load(
+        path, lambda data: joblib.load(io.BytesIO(data)), manifest_path, strict
+    )
 
 
 def safe_pickle_load(path, manifest_path=None, strict: Optional[bool] = None):
     """pickle.load après vérification d'intégrité."""
     import pickle
 
-    def _loader(p: str):
-        with open(p, "rb") as fh:
-            return pickle.load(fh)
-
-    return safe_load(path, _loader, manifest_path, strict)
+    return safe_load(path, lambda data: pickle.loads(data), manifest_path, strict)

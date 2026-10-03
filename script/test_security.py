@@ -112,6 +112,14 @@ class TestRateLimiter(unittest.TestCase):
         self.assertFalse(rl.allow("a"))
         self.assertTrue(rl.allow("b"))  # une autre IP n'est pas affectée
 
+    def test_bounded_eviction(self):
+        clock = _FakeClock()
+        rl = sec.RateLimiter(max_requests=5, window_seconds=60, clock=clock, max_keys=10)
+        for i in range(30):
+            rl.allow(f"ip{i}")
+        # Éviction bornée : la table reste autour de max_keys (pas de clear total).
+        self.assertLessEqual(len(rl._hits), 10)
+
 
 class TestClientIpAndConfig(unittest.TestCase):
     def setUp(self):
@@ -128,9 +136,18 @@ class TestClientIpAndConfig(unittest.TestCase):
             sec.client_ip("203.0.113.9", "1.2.3.4", trusted_proxies=[]), "203.0.113.9"
         )
 
-    def test_trusted_proxy_uses_forwarded_for(self):
+    def test_trusted_proxy_single_entry(self):
+        # Proxy de confiance qui n'expose que l'IP cliente -> une seule entrée.
         self.assertEqual(
-            sec.client_ip("10.0.0.1", "203.0.113.9, 10.0.0.1", trusted_proxies=["10.0.0.1"]),
+            sec.client_ip("10.0.0.1", "203.0.113.9", trusted_proxies=["10.0.0.1"]),
+            "203.0.113.9",
+        )
+
+    def test_trusted_proxy_rightmost_defeats_spoof(self):
+        # XFF appended par le proxy : l'entrée de gauche (9.9.9.9) est usurpée
+        # par le client ; on retient celle de droite (le vrai pair vu par le proxy).
+        self.assertEqual(
+            sec.client_ip("10.0.0.1", "9.9.9.9, 203.0.113.9", trusted_proxies=["10.0.0.1"]),
             "203.0.113.9",
         )
 
